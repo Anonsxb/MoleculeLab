@@ -1,0 +1,11 @@
+name,smiles,external_id,source,notes
+water,O,SAMPLE-01,MoleculeLab sample,valid row
+methanol,CO,SAMPLE-02,MoleculeLab sample,valid row
+ethanol,CCO,SAMPLE-03,MoleculeLab sample,valid row
+benzene,c1ccccc1,SAMPLE-04,MoleculeLab sample,valid row
+benzene_duplicate_input,c1ccccc1,SAMPLE-05,MoleculeLab sample,rejected: exact duplicate input
+benzene_different_spelling,C1=CC=CC=C1,SAMPLE-06,MoleculeLab sample,rejected: identical canonical structure
+not_a_molecule,NOT_A_SMILES,SAMPLE-07,MoleculeLab sample,rejected: invalid SMILES
+unclosed_ring,C1CCCCC,SAMPLE-08,MoleculeLab sample,rejected: unclosed ring
+missing_smiles,,SAMPLE-09,MoleculeLab sample,rejected: missing smiles value
+unlabeled,CCCC,SAMPLE-10,MoleculeLab sample,accepted: name defaults from structure

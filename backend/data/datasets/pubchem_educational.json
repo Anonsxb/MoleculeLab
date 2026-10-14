@@ -1,0 +1,1283 @@
+[
+  {
+    "name": "water",
+    "cid": 962,
+    "iupac_name": "oxidane",
+    "smiles": "O",
+    "formula": "H2O"
+  },
+  {
+    "name": "methanol",
+    "cid": 887,
+    "iupac_name": "methanol",
+    "smiles": "CO",
+    "formula": "CH4O"
+  },
+  {
+    "name": "ethanol",
+    "cid": 702,
+    "iupac_name": "ethanol",
+    "smiles": "CCO",
+    "formula": "C2H6O"
+  },
+  {
+    "name": "isopropanol",
+    "cid": 3776,
+    "iupac_name": "propan-2-ol",
+    "smiles": "CC(C)O",
+    "formula": "C3H8O"
+  },
+  {
+    "name": "1-propanol",
+    "cid": 1031,
+    "iupac_name": "propan-1-ol",
+    "smiles": "CCCO",
+    "formula": "C3H8O"
+  },
+  {
+    "name": "1-butanol",
+    "cid": 263,
+    "iupac_name": "butan-1-ol",
+    "smiles": "CCCCO",
+    "formula": "C4H10O"
+  },
+  {
+    "name": "2-butanol",
+    "cid": 6568,
+    "iupac_name": "butan-2-ol",
+    "smiles": "CCC(C)O",
+    "formula": "C4H10O"
+  },
+  {
+    "name": "tert-butanol",
+    "cid": 6386,
+    "iupac_name": "2-methylpropan-2-ol",
+    "smiles": "CC(C)(C)O",
+    "formula": "C4H10O"
+  },
+  {
+    "name": "ethylene glycol",
+    "cid": 174,
+    "iupac_name": "ethane-1,2-diol",
+    "smiles": "C(CO)O",
+    "formula": "C2H6O2"
+  },
+  {
+    "name": "glycerol",
+    "cid": 753,
+    "iupac_name": "propane-1,2,3-triol",
+    "smiles": "C(C(CO)O)O",
+    "formula": "C3H8O3"
+  },
+  {
+    "name": "acetone",
+    "cid": 180,
+    "iupac_name": "propan-2-one",
+    "smiles": "CC(=O)C",
+    "formula": "C3H6O"
+  },
+  {
+    "name": "butanone",
+    "cid": 6569,
+    "iupac_name": "butan-2-one",
+    "smiles": "CCC(=O)C",
+    "formula": "C4H8O"
+  },
+  {
+    "name": "formaldehyde",
+    "cid": 712,
+    "iupac_name": "formaldehyde",
+    "smiles": "C=O",
+    "formula": "CH2O"
+  },
+  {
+    "name": "acetaldehyde",
+    "cid": 177,
+    "iupac_name": "acetaldehyde",
+    "smiles": "CC=O",
+    "formula": "C2H4O"
+  },
+  {
+    "name": "benzaldehyde",
+    "cid": 240,
+    "iupac_name": "benzaldehyde",
+    "smiles": "C1=CC=C(C=C1)C=O",
+    "formula": "C7H6O"
+  },
+  {
+    "name": "formic acid",
+    "cid": 284,
+    "iupac_name": "formic acid",
+    "smiles": "C(=O)O",
+    "formula": "CH2O2"
+  },
+  {
+    "name": "acetic acid",
+    "cid": 176,
+    "iupac_name": "acetic acid",
+    "smiles": "CC(=O)O",
+    "formula": "C2H4O2"
+  },
+  {
+    "name": "propionic acid",
+    "cid": 1032,
+    "iupac_name": "propanoic acid",
+    "smiles": "CCC(=O)O",
+    "formula": "C3H6O2"
+  },
+  {
+    "name": "butyric acid",
+    "cid": 264,
+    "iupac_name": "butanoic acid",
+    "smiles": "CCCC(=O)O",
+    "formula": "C4H8O2"
+  },
+  {
+    "name": "oxalic acid",
+    "cid": 971,
+    "iupac_name": "oxalic acid",
+    "smiles": "C(=O)(C(=O)O)O",
+    "formula": "C2H2O4"
+  },
+  {
+    "name": "citric acid",
+    "cid": 311,
+    "iupac_name": "2-hydroxypropane-1,2,3-tricarboxylic acid",
+    "smiles": "C(C(=O)O)C(CC(=O)O)(C(=O)O)O",
+    "formula": "C6H8O7"
+  },
+  {
+    "name": "lactic acid",
+    "cid": 612,
+    "iupac_name": "2-hydroxypropanoic acid",
+    "smiles": "CC(C(=O)O)O",
+    "formula": "C3H6O3"
+  },
+  {
+    "name": "tartaric acid",
+    "cid": 444305,
+    "iupac_name": "(2R,3R)-2,3-dihydroxybutanedioic acid",
+    "smiles": "[C@@H]([C@H](C(=O)O)O)(C(=O)O)O",
+    "formula": "C4H6O6"
+  },
+  {
+    "name": "benzoic acid",
+    "cid": 243,
+    "iupac_name": "benzoic acid",
+    "smiles": "C1=CC=C(C=C1)C(=O)O",
+    "formula": "C7H6O2"
+  },
+  {
+    "name": "salicylic acid",
+    "cid": 338,
+    "iupac_name": "2-hydroxybenzoic acid",
+    "smiles": "C1=CC=C(C(=C1)C(=O)O)O",
+    "formula": "C7H6O3"
+  },
+  {
+    "name": "acetylsalicylic acid",
+    "cid": 2244,
+    "iupac_name": "2-acetyloxybenzoic acid",
+    "smiles": "CC(=O)OC1=CC=CC=C1C(=O)O",
+    "formula": "C9H8O4"
+  },
+  {
+    "name": "ibuprofen",
+    "cid": 3672,
+    "iupac_name": "2-[4-(2-methylpropyl)phenyl]propanoic acid",
+    "smiles": "CC(C)CC1=CC=C(C=C1)C(C)C(=O)O",
+    "formula": "C13H18O2"
+  },
+  {
+    "name": "acetaminophen",
+    "cid": 1983,
+    "iupac_name": "N-(4-hydroxyphenyl)acetamide",
+    "smiles": "CC(=O)NC1=CC=C(C=C1)O",
+    "formula": "C8H9NO2"
+  },
+  {
+    "name": "caffeine",
+    "cid": 2519,
+    "iupac_name": "1,3,7-trimethylpurine-2,6-dione",
+    "smiles": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",
+    "formula": "C8H10N4O2"
+  },
+  {
+    "name": "nicotine",
+    "cid": 89594,
+    "iupac_name": "3-[(2S)-1-methylpyrrolidin-2-yl]pyridine",
+    "smiles": "CN1CCC[C@H]1C2=CN=CC=C2",
+    "formula": "C10H14N2"
+  },
+  {
+    "name": "theobromine",
+    "cid": 5429,
+    "iupac_name": "3,7-dimethylpurine-2,6-dione",
+    "smiles": "CN1C=NC2=C1C(=O)NC(=O)N2C",
+    "formula": "C7H8N4O2"
+  },
+  {
+    "name": "adenine",
+    "cid": 190,
+    "iupac_name": "7H-purin-6-amine",
+    "smiles": "C1=NC2=NC=NC(=C2N1)N",
+    "formula": "C5H5N5"
+  },
+  {
+    "name": "guanine",
+    "cid": 135398634,
+    "iupac_name": "2-amino-1,7-dihydropurin-6-one",
+    "smiles": "C1=NC2=C(N1)C(=O)NC(=N2)N",
+    "formula": "C5H5N5O"
+  },
+  {
+    "name": "cytosine",
+    "cid": 597,
+    "iupac_name": "6-amino-1H-pyrimidin-2-one",
+    "smiles": "C1=C(NC(=O)N=C1)N",
+    "formula": "C4H5N3O"
+  },
+  {
+    "name": "uracil",
+    "cid": 1174,
+    "iupac_name": "1H-pyrimidine-2,4-dione",
+    "smiles": "C1=CNC(=O)NC1=O",
+    "formula": "C4H4N2O2"
+  },
+  {
+    "name": "thymine",
+    "cid": 1135,
+    "iupac_name": "5-methyl-1H-pyrimidine-2,4-dione",
+    "smiles": "CC1=CNC(=O)NC1=O",
+    "formula": "C5H6N2O2"
+  },
+  {
+    "name": "glucose",
+    "cid": 5793,
+    "iupac_name": "(3R,4S,5S,6R)-6-(hydroxymethyl)oxane-2,3,4,5-tetrol",
+    "smiles": "C([C@@H]1[C@H]([C@@H]([C@H](C(O1)O)O)O)O)O",
+    "formula": "C6H12O6"
+  },
+  {
+    "name": "fructose",
+    "cid": 2723872,
+    "iupac_name": "(3S,4R,5R)-2-(hydroxymethyl)oxane-2,3,4,5-tetrol",
+    "smiles": "C1[C@H]([C@H]([C@@H](C(O1)(CO)O)O)O)O",
+    "formula": "C6H12O6"
+  },
+  {
+    "name": "galactose",
+    "cid": 6036,
+    "iupac_name": "(3R,4S,5R,6R)-6-(hydroxymethyl)oxane-2,3,4,5-tetrol",
+    "smiles": "C([C@@H]1[C@@H]([C@@H]([C@H](C(O1)O)O)O)O)O",
+    "formula": "C6H12O6"
+  },
+  {
+    "name": "sucrose",
+    "cid": 5988,
+    "iupac_name": "(2R,3R,4S,5S,6R)-2-[(2S,3S,4S,5R)-3,4-dihydroxy-2,5-bis(hydroxymethyl)oxolan-2-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol",
+    "smiles": "C([C@@H]1[C@H]([C@@H]([C@H]([C@H](O1)O[C@]2([C@H]([C@@H]([C@H](O2)CO)O)O)CO)O)O)O)O",
+    "formula": "C12H22O11"
+  },
+  {
+    "name": "lactose",
+    "cid": 6134,
+    "iupac_name": "(2R,3R,4S,5R,6S)-2-(hydroxymethyl)-6-[(2R,3S,4R,5R,6R)-4,5,6-trihydroxy-2-(hydroxymethyl)oxan-3-yl]oxyoxane-3,4,5-triol",
+    "smiles": "C([C@@H]1[C@@H]([C@@H]([C@H]([C@@H](O1)O[C@@H]2[C@H](O[C@H]([C@@H]([C@H]2O)O)O)CO)O)O)O)O",
+    "formula": "C12H22O11"
+  },
+  {
+    "name": "maltose",
+    "cid": 439186,
+    "iupac_name": "(2R,3S,4S,5R,6R)-2-(hydroxymethyl)-6-[(2R,3S,4R,5R)-4,5,6-trihydroxy-2-(hydroxymethyl)oxan-3-yl]oxyoxane-3,4,5-triol",
+    "smiles": "C([C@@H]1[C@H]([C@@H]([C@H]([C@H](O1)O[C@@H]2[C@H](OC([C@@H]([C@H]2O)O)O)CO)O)O)O)O",
+    "formula": "C12H22O11"
+  },
+  {
+    "name": "ribose",
+    "cid": 10975657,
+    "iupac_name": "(3R,4R,5R)-oxane-2,3,4,5-tetrol",
+    "smiles": "C1[C@H]([C@H]([C@H](C(O1)O)O)O)O",
+    "formula": "C5H10O5"
+  },
+  {
+    "name": "deoxyribose",
+    "cid": 9828112,
+    "iupac_name": "(4S,5R)-5-(hydroxymethyl)oxolane-2,4-diol",
+    "smiles": "C1[C@@H]([C@H](OC1O)CO)O",
+    "formula": "C5H10O4"
+  },
+  {
+    "name": "glycine",
+    "cid": 750,
+    "iupac_name": "2-aminoacetic acid",
+    "smiles": "C(C(=O)O)N",
+    "formula": "C2H5NO2"
+  },
+  {
+    "name": "alanine",
+    "cid": 5950,
+    "iupac_name": "(2S)-2-aminopropanoic acid",
+    "smiles": "C[C@@H](C(=O)O)N",
+    "formula": "C3H7NO2"
+  },
+  {
+    "name": "valine",
+    "cid": 6287,
+    "iupac_name": "(2S)-2-amino-3-methylbutanoic acid",
+    "smiles": "CC(C)[C@@H](C(=O)O)N",
+    "formula": "C5H11NO2"
+  },
+  {
+    "name": "leucine",
+    "cid": 6106,
+    "iupac_name": "(2S)-2-amino-4-methylpentanoic acid",
+    "smiles": "CC(C)C[C@@H](C(=O)O)N",
+    "formula": "C6H13NO2"
+  },
+  {
+    "name": "isoleucine",
+    "cid": 6306,
+    "iupac_name": "(2S,3S)-2-amino-3-methylpentanoic acid",
+    "smiles": "CC[C@H](C)[C@@H](C(=O)O)N",
+    "formula": "C6H13NO2"
+  },
+  {
+    "name": "serine",
+    "cid": 5951,
+    "iupac_name": "(2S)-2-amino-3-hydroxypropanoic acid",
+    "smiles": "C([C@@H](C(=O)O)N)O",
+    "formula": "C3H7NO3"
+  },
+  {
+    "name": "threonine",
+    "cid": 6288,
+    "iupac_name": "(2S,3R)-2-amino-3-hydroxybutanoic acid",
+    "smiles": "C[C@H]([C@@H](C(=O)O)N)O",
+    "formula": "C4H9NO3"
+  },
+  {
+    "name": "cysteine",
+    "cid": 5862,
+    "iupac_name": "(2R)-2-amino-3-sulfanylpropanoic acid",
+    "smiles": "C([C@@H](C(=O)O)N)S",
+    "formula": "C3H7NO2S"
+  },
+  {
+    "name": "methionine",
+    "cid": 6137,
+    "iupac_name": "(2S)-2-amino-4-methylsulfanylbutanoic acid",
+    "smiles": "CSCC[C@@H](C(=O)O)N",
+    "formula": "C5H11NO2S"
+  },
+  {
+    "name": "proline",
+    "cid": 145742,
+    "iupac_name": "(2S)-pyrrolidine-2-carboxylic acid",
+    "smiles": "C1C[C@H](NC1)C(=O)O",
+    "formula": "C5H9NO2"
+  },
+  {
+    "name": "phenylalanine",
+    "cid": 6140,
+    "iupac_name": "(2S)-2-amino-3-phenylpropanoic acid",
+    "smiles": "C1=CC=C(C=C1)C[C@@H](C(=O)O)N",
+    "formula": "C9H11NO2"
+  },
+  {
+    "name": "tyrosine",
+    "cid": 6057,
+    "iupac_name": "(2S)-2-amino-3-(4-hydroxyphenyl)propanoic acid",
+    "smiles": "C1=CC(=CC=C1C[C@@H](C(=O)O)N)O",
+    "formula": "C9H11NO3"
+  },
+  {
+    "name": "tryptophan",
+    "cid": 6305,
+    "iupac_name": "(2S)-2-amino-3-(1H-indol-3-yl)propanoic acid",
+    "smiles": "C1=CC=C2C(=C1)C(=CN2)C[C@@H](C(=O)O)N",
+    "formula": "C11H12N2O2"
+  },
+  {
+    "name": "aspartic acid",
+    "cid": 5960,
+    "iupac_name": "(2S)-2-aminobutanedioic acid",
+    "smiles": "C([C@@H](C(=O)O)N)C(=O)O",
+    "formula": "C4H7NO4"
+  },
+  {
+    "name": "glutamic acid",
+    "cid": 33032,
+    "iupac_name": "(2S)-2-aminopentanedioic acid",
+    "smiles": "C(CC(=O)O)[C@@H](C(=O)O)N",
+    "formula": "C5H9NO4"
+  },
+  {
+    "name": "lysine",
+    "cid": 5962,
+    "iupac_name": "(2S)-2,6-diaminohexanoic acid",
+    "smiles": "C(CCN)C[C@@H](C(=O)O)N",
+    "formula": "C6H14N2O2"
+  },
+  {
+    "name": "arginine",
+    "cid": 6322,
+    "iupac_name": "(2S)-2-amino-5-(diaminomethylideneamino)pentanoic acid",
+    "smiles": "C(C[C@@H](C(=O)O)N)CN=C(N)N",
+    "formula": "C6H14N4O2"
+  },
+  {
+    "name": "histidine",
+    "cid": 6274,
+    "iupac_name": "(2S)-2-amino-3-(1H-imidazol-5-yl)propanoic acid",
+    "smiles": "C1=C(NC=N1)C[C@@H](C(=O)O)N",
+    "formula": "C6H9N3O2"
+  },
+  {
+    "name": "asparagine",
+    "cid": 6267,
+    "iupac_name": "(2S)-2,4-diamino-4-oxobutanoic acid",
+    "smiles": "C([C@@H](C(=O)O)N)C(=O)N",
+    "formula": "C4H8N2O3"
+  },
+  {
+    "name": "glutamine",
+    "cid": 5961,
+    "iupac_name": "(2S)-2,5-diamino-5-oxopentanoic acid",
+    "smiles": "C(CC(=O)N)[C@@H](C(=O)O)N",
+    "formula": "C5H10N2O3"
+  },
+  {
+    "name": "benzene",
+    "cid": 241,
+    "iupac_name": "benzene",
+    "smiles": "C1=CC=CC=C1",
+    "formula": "C6H6"
+  },
+  {
+    "name": "toluene",
+    "cid": 1140,
+    "iupac_name": "toluene",
+    "smiles": "CC1=CC=CC=C1",
+    "formula": "C7H8"
+  },
+  {
+    "name": "ethylbenzene",
+    "cid": 7500,
+    "iupac_name": "ethylbenzene",
+    "smiles": "CCC1=CC=CC=C1",
+    "formula": "C8H10"
+  },
+  {
+    "name": "styrene",
+    "cid": 7501,
+    "iupac_name": "styrene",
+    "smiles": "C=CC1=CC=CC=C1",
+    "formula": "C8H8"
+  },
+  {
+    "name": "naphthalene",
+    "cid": 931,
+    "iupac_name": "naphthalene",
+    "smiles": "C1=CC=C2C=CC=CC2=C1",
+    "formula": "C10H8"
+  },
+  {
+    "name": "anthracene",
+    "cid": 8418,
+    "iupac_name": "anthracene",
+    "smiles": "C1=CC=C2C=C3C=CC=CC3=CC2=C1",
+    "formula": "C14H10"
+  },
+  {
+    "name": "phenol",
+    "cid": 996,
+    "iupac_name": "phenol",
+    "smiles": "C1=CC=C(C=C1)O",
+    "formula": "C6H6O"
+  },
+  {
+    "name": "aniline",
+    "cid": 6115,
+    "iupac_name": "aniline",
+    "smiles": "C1=CC=C(C=C1)N",
+    "formula": "C6H7N"
+  },
+  {
+    "name": "nitrobenzene",
+    "cid": 7416,
+    "iupac_name": "nitrobenzene",
+    "smiles": "C1=CC=C(C=C1)[N+](=O)[O-]",
+    "formula": "C6H5NO2"
+  },
+  {
+    "name": "chlorobenzene",
+    "cid": 7964,
+    "iupac_name": "chlorobenzene",
+    "smiles": "C1=CC=C(C=C1)Cl",
+    "formula": "C6H5Cl"
+  },
+  {
+    "name": "bromobenzene",
+    "cid": 7961,
+    "iupac_name": "bromobenzene",
+    "smiles": "C1=CC=C(C=C1)Br",
+    "formula": "C6H5Br"
+  },
+  {
+    "name": "benzyl alcohol",
+    "cid": 244,
+    "iupac_name": "phenylmethanol",
+    "smiles": "C1=CC=C(C=C1)CO",
+    "formula": "C7H8O"
+  },
+  {
+    "name": "acetophenone",
+    "cid": 7410,
+    "iupac_name": "1-phenylethanone",
+    "smiles": "CC(=O)C1=CC=CC=C1",
+    "formula": "C8H8O"
+  },
+  {
+    "name": "benzonitrile",
+    "cid": 7505,
+    "iupac_name": "benzonitrile",
+    "smiles": "C1=CC=C(C=C1)C#N",
+    "formula": "C7H5N"
+  },
+  {
+    "name": "biphenyl",
+    "cid": 7095,
+    "iupac_name": "1,1'-biphenyl",
+    "smiles": "C1=CC=C(C=C1)C2=CC=CC=C2",
+    "formula": "C12H10"
+  },
+  {
+    "name": "phenanthrene",
+    "cid": 995,
+    "iupac_name": "phenanthrene",
+    "smiles": "C1=CC=C2C(=C1)C=CC3=CC=CC=C32",
+    "formula": "C14H10"
+  },
+  {
+    "name": "pyridine",
+    "cid": 1049,
+    "iupac_name": "pyridine",
+    "smiles": "C1=CC=NC=C1",
+    "formula": "C5H5N"
+  },
+  {
+    "name": "pyrimidine",
+    "cid": 9260,
+    "iupac_name": "pyrimidine",
+    "smiles": "C1=CN=CN=C1",
+    "formula": "C4H4N2"
+  },
+  {
+    "name": "pyrrole",
+    "cid": 8027,
+    "iupac_name": "1H-pyrrole",
+    "smiles": "C1=CNC=C1",
+    "formula": "C4H5N"
+  },
+  {
+    "name": "furan",
+    "cid": 8029,
+    "iupac_name": "furan",
+    "smiles": "C1=COC=C1",
+    "formula": "C4H4O"
+  },
+  {
+    "name": "thiophene",
+    "cid": 8030,
+    "iupac_name": "thiophene",
+    "smiles": "C1=CSC=C1",
+    "formula": "C4H4S"
+  },
+  {
+    "name": "imidazole",
+    "cid": 795,
+    "iupac_name": "1H-imidazole",
+    "smiles": "C1=CN=CN1",
+    "formula": "C3H4N2"
+  },
+  {
+    "name": "indole",
+    "cid": 798,
+    "iupac_name": "1H-indole",
+    "smiles": "C1=CC=C2C(=C1)C=CN2",
+    "formula": "C8H7N"
+  },
+  {
+    "name": "quinoline",
+    "cid": 7047,
+    "iupac_name": "quinoline",
+    "smiles": "C1=CC=C2C(=C1)C=CC=N2",
+    "formula": "C9H7N"
+  },
+  {
+    "name": "purine",
+    "cid": 1044,
+    "iupac_name": "7H-purine",
+    "smiles": "C1=C2C(=NC=N1)N=CN2",
+    "formula": "C5H4N4"
+  },
+  {
+    "name": "morphine",
+    "cid": 5288826,
+    "iupac_name": "(4R,4aR,7S,7aR,12bS)-3-methyl-2,4,4a,7,7a,13-hexahydro-1H-4,12-methanobenzofuro[3,2-e]isoquinoline-7,9-diol",
+    "smiles": "CN1CC[C@]23[C@@H]4[C@H]1CC5=C2C(=C(C=C5)O)O[C@H]3[C@H](C=C4)O",
+    "formula": "C17H19NO3"
+  },
+  {
+    "name": "codeine",
+    "cid": 5284371,
+    "iupac_name": "(4R,4aR,7S,7aR,12bS)-9-methoxy-3-methyl-2,4,4a,7,7a,13-hexahydro-1H-4,12-methanobenzofuro[3,2-e]isoquinolin-7-ol",
+    "smiles": "CN1CC[C@]23[C@@H]4[C@H]1CC5=C2C(=C(C=C5)OC)O[C@H]3[C@H](C=C4)O",
+    "formula": "C18H21NO3"
+  },
+  {
+    "name": "menthol",
+    "cid": 1254,
+    "iupac_name": "5-methyl-2-propan-2-ylcyclohexan-1-ol",
+    "smiles": "CC1CCC(C(C1)O)C(C)C",
+    "formula": "C10H20O"
+  },
+  {
+    "name": "camphor",
+    "cid": 2537,
+    "iupac_name": "1,7,7-trimethylbicyclo[2.2.1]heptan-2-one",
+    "smiles": "CC1(C2CCC1(C(=O)C2)C)C",
+    "formula": "C10H16O"
+  },
+  {
+    "name": "limonene",
+    "cid": 22311,
+    "iupac_name": "1-methyl-4-prop-1-en-2-ylcyclohexene",
+    "smiles": "CC1=CCC(CC1)C(=C)C",
+    "formula": "C10H16"
+  },
+  {
+    "name": "pinene",
+    "cid": 15837102,
+    "iupac_name": "2,6,6-trimethylbicyclo[3.1.1]hept-1-ene",
+    "smiles": "CC1=C2CC(C2(C)C)CC1",
+    "formula": "C10H16"
+  },
+  {
+    "name": "cholesterol",
+    "cid": 5997,
+    "iupac_name": "(3S,8S,9S,10R,13R,14S,17R)-10,13-dimethyl-17-[(2R)-6-methylheptan-2-yl]-2,3,4,7,8,9,11,12,14,15,16,17-dodecahydro-1H-cyclopenta[a]phenanthren-3-ol",
+    "smiles": "C[C@H](CCCC(C)C)[C@H]1CC[C@@H]2[C@@]1(CC[C@H]3[C@H]2CC=C4[C@@]3(CC[C@@H](C4)O)C)C",
+    "formula": "C27H46O"
+  },
+  {
+    "name": "testosterone",
+    "cid": 6013,
+    "iupac_name": "(8R,9S,10R,13S,14S,17S)-17-hydroxy-10,13-dimethyl-1,2,6,7,8,9,11,12,14,15,16,17-dodecahydrocyclopenta[a]phenanthren-3-one",
+    "smiles": "C[C@]12CC[C@H]3[C@H]([C@@H]1CC[C@@H]2O)CCC4=CC(=O)CC[C@]34C",
+    "formula": "C19H28O2"
+  },
+  {
+    "name": "estradiol",
+    "cid": 5757,
+    "iupac_name": "(8R,9S,13S,14S,17S)-13-methyl-6,7,8,9,11,12,14,15,16,17-decahydrocyclopenta[a]phenanthrene-3,17-diol",
+    "smiles": "C[C@]12CC[C@H]3[C@H]([C@@H]1CC[C@@H]2O)CCC4=C3C=CC(=C4)O",
+    "formula": "C18H24O2"
+  },
+  {
+    "name": "progesterone",
+    "cid": 5994,
+    "iupac_name": "(8S,9S,10R,13S,14S,17S)-17-acetyl-10,13-dimethyl-1,2,6,7,8,9,11,12,14,15,16,17-dodecahydrocyclopenta[a]phenanthren-3-one",
+    "smiles": "CC(=O)[C@H]1CC[C@@H]2[C@@]1(CC[C@H]3[C@H]2CCC4=CC(=O)CC[C@]34C)C",
+    "formula": "C21H30O2"
+  },
+  {
+    "name": "cortisol",
+    "cid": 5754,
+    "iupac_name": "(8S,9S,10R,11S,13S,14S,17R)-11,17-dihydroxy-17-(2-hydroxyacetyl)-10,13-dimethyl-2,6,7,8,9,11,12,14,15,16-decahydro-1H-cyclopenta[a]phenanthren-3-one",
+    "smiles": "C[C@]12CCC(=O)C=C1CC[C@@H]3[C@@H]2[C@H](C[C@]4([C@H]3CC[C@@]4(C(=O)CO)O)C)O",
+    "formula": "C21H30O5"
+  },
+  {
+    "name": "adrenaline",
+    "cid": 5816,
+    "iupac_name": "4-[(1R)-1-hydroxy-2-(methylamino)ethyl]benzene-1,2-diol",
+    "smiles": "CNC[C@@H](C1=CC(=C(C=C1)O)O)O",
+    "formula": "C9H13NO3"
+  },
+  {
+    "name": "dopamine",
+    "cid": 681,
+    "iupac_name": "4-(2-aminoethyl)benzene-1,2-diol",
+    "smiles": "C1=CC(=C(C=C1CCN)O)O",
+    "formula": "C8H11NO2"
+  },
+  {
+    "name": "serotonin",
+    "cid": 5202,
+    "iupac_name": "3-(2-aminoethyl)-1H-indol-5-ol",
+    "smiles": "C1=CC2=C(C=C1O)C(=CN2)CCN",
+    "formula": "C10H12N2O"
+  },
+  {
+    "name": "histamine",
+    "cid": 774,
+    "iupac_name": "2-(1H-imidazol-5-yl)ethanamine",
+    "smiles": "C1=C(NC=N1)CCN",
+    "formula": "C5H9N3"
+  },
+  {
+    "name": "penicillin G",
+    "cid": 5904,
+    "iupac_name": "(2S,5R,6R)-3,3-dimethyl-7-oxo-6-[(2-phenylacetyl)amino]-4-thia-1-azabicyclo[3.2.0]heptane-2-carboxylic acid",
+    "smiles": "CC1([C@@H](N2[C@H](S1)[C@@H](C2=O)NC(=O)CC3=CC=CC=C3)C(=O)O)C",
+    "formula": "C16H18N2O4S"
+  },
+  {
+    "name": "ampicillin",
+    "cid": 6249,
+    "iupac_name": "(2S,5R,6R)-6-[[(2R)-2-amino-2-phenylacetyl]amino]-3,3-dimethyl-7-oxo-4-thia-1-azabicyclo[3.2.0]heptane-2-carboxylic acid",
+    "smiles": "CC1([C@@H](N2[C@H](S1)[C@@H](C2=O)NC(=O)[C@@H](C3=CC=CC=C3)N)C(=O)O)C",
+    "formula": "C16H19N3O4S"
+  },
+  {
+    "name": "tetracycline",
+    "cid": 54675776,
+    "iupac_name": "(4S,4aS,5aS,6S,12aR)-4-(dimethylamino)-1,6,10,11,12a-pentahydroxy-6-methyl-3,12-dioxo-4,4a,5,5a-tetrahydrotetracene-2-carboxamide",
+    "smiles": "C[C@@]1([C@H]2C[C@H]3[C@@H](C(=O)C(=C([C@]3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O",
+    "formula": "C22H24N2O8"
+  },
+  {
+    "name": "chloramphenicol",
+    "cid": 5959,
+    "iupac_name": "2,2-dichloro-N-[(1R,2R)-1,3-dihydroxy-1-(4-nitrophenyl)propan-2-yl]acetamide",
+    "smiles": "C1=CC(=CC=C1[C@H]([C@@H](CO)NC(=O)C(Cl)Cl)O)[N+](=O)[O-]",
+    "formula": "C11H12Cl2N2O5"
+  },
+  {
+    "name": "sulfanilamide",
+    "cid": 5333,
+    "iupac_name": "4-aminobenzenesulfonamide",
+    "smiles": "C1=CC(=CC=C1N)S(=O)(=O)N",
+    "formula": "C6H8N2O2S"
+  },
+  {
+    "name": "isoniazid",
+    "cid": 3767,
+    "iupac_name": "pyridine-4-carbohydrazide",
+    "smiles": "C1=CN=CC=C1C(=O)NN",
+    "formula": "C6H7N3O"
+  },
+  {
+    "name": "aspirin",
+    "cid": 2244,
+    "iupac_name": "2-acetyloxybenzoic acid",
+    "smiles": "CC(=O)OC1=CC=CC=C1C(=O)O",
+    "formula": "C9H8O4"
+  },
+  {
+    "name": "paracetamol",
+    "cid": 1983,
+    "iupac_name": "N-(4-hydroxyphenyl)acetamide",
+    "smiles": "CC(=O)NC1=CC=C(C=C1)O",
+    "formula": "C8H9NO2"
+  },
+  {
+    "name": "lidocaine",
+    "cid": 3676,
+    "iupac_name": "2-(diethylamino)-N-(2,6-dimethylphenyl)acetamide",
+    "smiles": "CCN(CC)CC(=O)NC1=C(C=CC=C1C)C",
+    "formula": "C14H22N2O"
+  },
+  {
+    "name": "diazepam",
+    "cid": 3016,
+    "iupac_name": "7-chloro-1-methyl-5-phenyl-3H-1,4-benzodiazepin-2-one",
+    "smiles": "CN1C(=O)CN=C(C2=C1C=CC(=C2)Cl)C3=CC=CC=C3",
+    "formula": "C16H13ClN2O"
+  },
+  {
+    "name": "warfarin",
+    "cid": 54678486,
+    "iupac_name": "4-hydroxy-3-(3-oxo-1-phenylbutyl)chromen-2-one",
+    "smiles": "CC(=O)CC(C1=CC=CC=C1)C2=C(C3=CC=CC=C3OC2=O)O",
+    "formula": "C19H16O4"
+  },
+  {
+    "name": "atropine",
+    "cid": 174174,
+    "iupac_name": "[(1S,5R)-8-methyl-8-azabicyclo[3.2.1]octan-3-yl] 3-hydroxy-2-phenylpropanoate",
+    "smiles": "CN1[C@@H]2CC[C@H]1CC(C2)OC(=O)C(CO)C3=CC=CC=C3",
+    "formula": "C17H23NO3"
+  },
+  {
+    "name": "ephedrine",
+    "cid": 9294,
+    "iupac_name": "(1R,2S)-2-(methylamino)-1-phenylpropan-1-ol",
+    "smiles": "C[C@@H]([C@@H](C1=CC=CC=C1)O)NC",
+    "formula": "C10H15NO"
+  },
+  {
+    "name": "mesitylene",
+    "cid": 7947,
+    "iupac_name": "1,3,5-trimethylbenzene",
+    "smiles": "CC1=CC(=CC(=C1)C)C",
+    "formula": "C9H12"
+  },
+  {
+    "name": "resorcinol",
+    "cid": 5054,
+    "iupac_name": "benzene-1,3-diol",
+    "smiles": "C1=CC(=CC(=C1)O)O",
+    "formula": "C6H6O2"
+  },
+  {
+    "name": "hydroquinone",
+    "cid": 785,
+    "iupac_name": "benzene-1,4-diol",
+    "smiles": "C1=CC(=CC=C1O)O",
+    "formula": "C6H6O2"
+  },
+  {
+    "name": "catechol",
+    "cid": 289,
+    "iupac_name": "benzene-1,2-diol",
+    "smiles": "C1=CC=C(C(=C1)O)O",
+    "formula": "C6H6O2"
+  },
+  {
+    "name": "phthalic acid",
+    "cid": 1017,
+    "iupac_name": "phthalic acid",
+    "smiles": "C1=CC=C(C(=C1)C(=O)O)C(=O)O",
+    "formula": "C8H6O4"
+  },
+  {
+    "name": "terephthalic acid",
+    "cid": 7489,
+    "iupac_name": "terephthalic acid",
+    "smiles": "C1=CC(=CC=C1C(=O)O)C(=O)O",
+    "formula": "C8H6O4"
+  },
+  {
+    "name": "adipic acid",
+    "cid": 196,
+    "iupac_name": "hexanedioic acid",
+    "smiles": "C(CCC(=O)O)CC(=O)O",
+    "formula": "C6H10O4"
+  },
+  {
+    "name": "succinic acid",
+    "cid": 1110,
+    "iupac_name": "butanedioic acid",
+    "smiles": "C(CC(=O)O)C(=O)O",
+    "formula": "C4H6O4"
+  },
+  {
+    "name": "malonic acid",
+    "cid": 867,
+    "iupac_name": "propanedioic acid",
+    "smiles": "C(C(=O)O)C(=O)O",
+    "formula": "C3H4O4"
+  },
+  {
+    "name": "acrylic acid",
+    "cid": 6581,
+    "iupac_name": "prop-2-enoic acid",
+    "smiles": "C=CC(=O)O",
+    "formula": "C3H4O2"
+  },
+  {
+    "name": "methacrylic acid",
+    "cid": 4093,
+    "iupac_name": "2-methylprop-2-enoic acid",
+    "smiles": "CC(=C)C(=O)O",
+    "formula": "C4H6O2"
+  },
+  {
+    "name": "acrylamide",
+    "cid": 6579,
+    "iupac_name": "prop-2-enamide",
+    "smiles": "C=CC(=O)N",
+    "formula": "C3H5NO"
+  },
+  {
+    "name": "caprolactam",
+    "cid": 7768,
+    "iupac_name": "azepan-2-one",
+    "smiles": "C1CCC(=O)NCC1",
+    "formula": "C6H11NO"
+  },
+  {
+    "name": "anethole",
+    "cid": 637563,
+    "iupac_name": "1-methoxy-4-[(E)-prop-1-enyl]benzene",
+    "smiles": "C/C=C/C1=CC=C(C=C1)OC",
+    "formula": "C10H12O"
+  },
+  {
+    "name": "vanillin",
+    "cid": 1183,
+    "iupac_name": "4-hydroxy-3-methoxybenzaldehyde",
+    "smiles": "COC1=C(C=CC(=C1)C=O)O",
+    "formula": "C8H8O3"
+  },
+  {
+    "name": "eugenol",
+    "cid": 3314,
+    "iupac_name": "2-methoxy-4-prop-2-enylphenol",
+    "smiles": "COC1=C(C=CC(=C1)CC=C)O",
+    "formula": "C10H12O2"
+  },
+  {
+    "name": "thymol",
+    "cid": 6989,
+    "iupac_name": "5-methyl-2-propan-2-ylphenol",
+    "smiles": "CC1=CC(=C(C=C1)C(C)C)O",
+    "formula": "C10H14O"
+  },
+  {
+    "name": "pinacol",
+    "cid": 6425,
+    "iupac_name": "2,3-dimethylbutane-2,3-diol",
+    "smiles": "CC(C)(C(C)(C)O)O",
+    "formula": "C6H14O2"
+  },
+  {
+    "name": "diethyl ether",
+    "cid": 3283,
+    "iupac_name": "ethoxyethane",
+    "smiles": "CCOCC",
+    "formula": "C4H10O"
+  },
+  {
+    "name": "tetrahydrofuran",
+    "cid": 8028,
+    "iupac_name": "oxolane",
+    "smiles": "C1CCOC1",
+    "formula": "C4H8O"
+  },
+  {
+    "name": "dioxane",
+    "cid": 31275,
+    "iupac_name": "1,4-dioxane",
+    "smiles": "C1COCCO1",
+    "formula": "C4H8O2"
+  },
+  {
+    "name": "dimethyl sulfoxide",
+    "cid": 679,
+    "iupac_name": "methylsulfinylmethane",
+    "smiles": "CS(=O)C",
+    "formula": "C2H6OS"
+  },
+  {
+    "name": "acetonitrile",
+    "cid": 6342,
+    "iupac_name": "acetonitrile",
+    "smiles": "CC#N",
+    "formula": "C2H3N"
+  },
+  {
+    "name": "nitromethane",
+    "cid": 6375,
+    "iupac_name": "nitromethane",
+    "smiles": "C[N+](=O)[O-]",
+    "formula": "CH3NO2"
+  },
+  {
+    "name": "carbon disulfide",
+    "cid": 6348,
+    "iupac_name": "methanedithione",
+    "smiles": "C(=S)=S",
+    "formula": "CS2"
+  },
+  {
+    "name": "carbon tetrachloride",
+    "cid": 5943,
+    "iupac_name": "tetrachloromethane",
+    "smiles": "C(Cl)(Cl)(Cl)Cl",
+    "formula": "CCl4"
+  },
+  {
+    "name": "chloroform",
+    "cid": 6212,
+    "iupac_name": "chloroform",
+    "smiles": "C(Cl)(Cl)Cl",
+    "formula": "CHCl3"
+  },
+  {
+    "name": "dichloromethane",
+    "cid": 6344,
+    "iupac_name": "dichloromethane",
+    "smiles": "C(Cl)Cl",
+    "formula": "CH2Cl2"
+  },
+  {
+    "name": "1,2-dichloroethane",
+    "cid": 11,
+    "iupac_name": "1,2-dichloroethane",
+    "smiles": "C(CCl)Cl",
+    "formula": "C2H4Cl2"
+  },
+  {
+    "name": "tetrachloroethylene",
+    "cid": 31373,
+    "iupac_name": "1,1,2,2-tetrachloroethene",
+    "smiles": "C(=C(Cl)Cl)(Cl)Cl",
+    "formula": "C2Cl4"
+  },
+  {
+    "name": "hexane",
+    "cid": 8058,
+    "iupac_name": "hexane",
+    "smiles": "CCCCCC",
+    "formula": "C6H14"
+  },
+  {
+    "name": "cyclohexane",
+    "cid": 8078,
+    "iupac_name": "cyclohexane",
+    "smiles": "C1CCCCC1",
+    "formula": "C6H12"
+  },
+  {
+    "name": "heptane",
+    "cid": 8900,
+    "iupac_name": "heptane",
+    "smiles": "CCCCCCC",
+    "formula": "C7H16"
+  },
+  {
+    "name": "octane",
+    "cid": 356,
+    "iupac_name": "octane",
+    "smiles": "CCCCCCCC",
+    "formula": "C8H18"
+  },
+  {
+    "name": "decane",
+    "cid": 15600,
+    "iupac_name": "decane",
+    "smiles": "CCCCCCCCCC",
+    "formula": "C10H22"
+  },
+  {
+    "name": "ethylene",
+    "cid": 6325,
+    "iupac_name": "ethene",
+    "smiles": "C=C",
+    "formula": "C2H4"
+  },
+  {
+    "name": "propylene",
+    "cid": 8252,
+    "iupac_name": "prop-1-ene",
+    "smiles": "CC=C",
+    "formula": "C3H6"
+  },
+  {
+    "name": "acetylene",
+    "cid": 6326,
+    "iupac_name": "acetylene",
+    "smiles": "C#C",
+    "formula": "C2H2"
+  },
+  {
+    "name": "butadiene",
+    "cid": 7845,
+    "iupac_name": "buta-1,3-diene",
+    "smiles": "C=CC=C",
+    "formula": "C4H6"
+  },
+  {
+    "name": "isoprene",
+    "cid": 6557,
+    "iupac_name": "2-methylbuta-1,3-diene",
+    "smiles": "CC(=C)C=C",
+    "formula": "C5H8"
+  },
+  {
+    "name": "cyclopentane",
+    "cid": 9253,
+    "iupac_name": "cyclopentane",
+    "smiles": "C1CCCC1",
+    "formula": "C5H10"
+  },
+  {
+    "name": "methylcyclopentane",
+    "cid": 7296,
+    "iupac_name": "methylcyclopentane",
+    "smiles": "CC1CCCC1",
+    "formula": "C6H12"
+  },
+  {
+    "name": "ethyl acetate",
+    "cid": 8857,
+    "iupac_name": "ethyl acetate",
+    "smiles": "CCOC(=O)C",
+    "formula": "C4H8O2"
+  },
+  {
+    "name": "methyl salicylate",
+    "cid": 4133,
+    "iupac_name": "methyl 2-hydroxybenzoate",
+    "smiles": "COC(=O)C1=CC=CC=C1O",
+    "formula": "C8H8O3"
+  },
+  {
+    "name": "methyl benzoate",
+    "cid": 7150,
+    "iupac_name": "methyl benzoate",
+    "smiles": "COC(=O)C1=CC=CC=C1",
+    "formula": "C8H8O2"
+  },
+  {
+    "name": "dimethyl carbonate",
+    "cid": 12021,
+    "iupac_name": "dimethyl carbonate",
+    "smiles": "COC(=O)OC",
+    "formula": "C3H6O3"
+  },
+  {
+    "name": "urea",
+    "cid": 1176,
+    "iupac_name": "urea",
+    "smiles": "C(=O)(N)N",
+    "formula": "CH4N2O"
+  },
+  {
+    "name": "thiourea",
+    "cid": 2723790,
+    "iupac_name": "thiourea",
+    "smiles": "C(=S)(N)N",
+    "formula": "CH4N2S"
+  },
+  {
+    "name": "acetamide",
+    "cid": 178,
+    "iupac_name": "acetamide",
+    "smiles": "CC(=O)N",
+    "formula": "C2H5NO"
+  },
+  {
+    "name": "benzamide",
+    "cid": 2331,
+    "iupac_name": "benzamide",
+    "smiles": "C1=CC=C(C=C1)C(=O)N",
+    "formula": "C7H7NO"
+  },
+  {
+    "name": "nicotinamide",
+    "cid": 936,
+    "iupac_name": "pyridine-3-carboxamide",
+    "smiles": "C1=CC(=CN=C1)C(=O)N",
+    "formula": "C6H6N2O"
+  },
+  {
+    "name": "o-toluidine",
+    "cid": 7242,
+    "iupac_name": "2-methylaniline",
+    "smiles": "CC1=CC=CC=C1N",
+    "formula": "C7H9N"
+  },
+  {
+    "name": "pyrogallol",
+    "cid": 1057,
+    "iupac_name": "benzene-1,2,3-triol",
+    "smiles": "C1=CC(=C(C(=C1)O)O)O",
+    "formula": "C6H6O3"
+  },
+  {
+    "name": "gallic acid",
+    "cid": 370,
+    "iupac_name": "3,4,5-trihydroxybenzoic acid",
+    "smiles": "C1=C(C=C(C(=C1O)O)O)C(=O)O",
+    "formula": "C7H6O5"
+  },
+  {
+    "name": "tannic acid",
+    "cid": 16129778,
+    "iupac_name": "[2,3-dihydroxy-5-[[(2R,3R,4S,5R,6S)-3,4,5,6-tetrakis[[3,4-dihydroxy-5-(3,4,5-trihydroxybenzoyl)oxybenzoyl]oxy]oxan-2-yl]methoxycarbonyl]phenyl] 3,4,5-trihydroxybenzoate",
+    "smiles": "C1=C(C=C(C(=C1O)O)O)C(=O)OC2=CC(=CC(=C2O)O)C(=O)OC[C@@H]3[C@H]([C@@H]([C@H]([C@@H](O3)OC(=O)C4=CC(=C(C(=C4)OC(=O)C5=CC(=C(C(=C5)O)O)O)O)O)OC(=O)C6=CC(=C(C(=C6)OC(=O)C7=CC(=C(C(=C7)O)O)O)O)O)OC(=O)C8=CC(=C(C(=C8)OC(=O)C9=CC(=C(C(=C9)O)O)O)O)O)OC(=O)C1=CC(=C(C(=C1)OC(=O)C1=CC(=C(C(=C1)O)O)O)O)O",
+    "formula": "C76H52O46"
+  },
+  {
+    "name": "ascorbic acid",
+    "cid": 54670067,
+    "iupac_name": "(2R)-2-[(1S)-1,2-dihydroxyethyl]-3,4-dihydroxy-2H-furan-5-one",
+    "smiles": "C([C@@H]([C@@H]1C(=C(C(=O)O1)O)O)O)O",
+    "formula": "C6H8O6"
+  },
+  {
+    "name": "retinol",
+    "cid": 445354,
+    "iupac_name": "(2E,4E,6E,8E)-3,7-dimethyl-9-(2,6,6-trimethylcyclohexen-1-yl)nona-2,4,6,8-tetraen-1-ol",
+    "smiles": "CC1=C(C(CCC1)(C)C)/C=C/C(=C/C=C/C(=C/CO)/C)/C",
+    "formula": "C20H30O"
+  },
+  {
+    "name": "beta-carotene",
+    "cid": 5280489,
+    "iupac_name": "1,3,3-trimethyl-2-[(1E,3E,5E,7E,9E,11E,13E,15E,17E)-3,7,12,16-tetramethyl-18-(2,6,6-trimethylcyclohexen-1-yl)octadeca-1,3,5,7,9,11,13,15,17-nonaenyl]cyclohexene",
+    "smiles": "CC1=C(C(CCC1)(C)C)/C=C/C(=C/C=C/C(=C/C=C/C=C(/C=C/C=C(/C=C/C2=C(CCCC2(C)C)C)\\C)\\C)/C)/C",
+    "formula": "C40H56"
+  },
+  {
+    "name": "biotin",
+    "cid": 171548,
+    "iupac_name": "5-[(3aS,4S,6aR)-2-oxo-1,3,3a,4,6,6a-hexahydrothieno[3,4-d]imidazol-4-yl]pentanoic acid",
+    "smiles": "C1[C@H]2[C@@H]([C@@H](S1)CCCCC(=O)O)NC(=O)N2",
+    "formula": "C10H16N2O3S"
+  },
+  {
+    "name": "folic acid",
+    "cid": 135398658,
+    "iupac_name": "(2S)-2-[[4-[(2-amino-4-oxo-3H-pteridin-6-yl)methylamino]benzoyl]amino]pentanedioic acid",
+    "smiles": "C1=CC(=CC=C1C(=O)N[C@@H](CCC(=O)O)C(=O)O)NCC2=CN=C3C(=N2)C(=O)NC(=N3)N",
+    "formula": "C19H19N7O6"
+  },
+  {
+    "name": "riboflavin",
+    "cid": 493570,
+    "iupac_name": "7,8-dimethyl-10-[(2S,3S,4R)-2,3,4,5-tetrahydroxypentyl]benzo[g]pteridine-2,4-dione",
+    "smiles": "CC1=CC2=C(C=C1C)N(C3=NC(=O)NC(=O)C3=N2)C[C@@H]([C@@H]([C@@H](CO)O)O)O",
+    "formula": "C17H20N4O6"
+  },
+  {
+    "name": "thiamine",
+    "cid": 1130,
+    "iupac_name": "2-[3-[(4-amino-2-methylpyrimidin-5-yl)methyl]-4-methyl-1,3-thiazol-3-ium-5-yl]ethanol",
+    "smiles": "CC1=C(SC=[N+]1CC2=CN=C(N=C2N)C)CCO",
+    "formula": "C12H17N4OS+"
+  },
+  {
+    "name": "chlorophyll a",
+    "cid": 12085802,
+    "iupac_name": "magnesium methyl (3R,21S,22S)-16-ethenyl-11-ethyl-12,17,21,26-tetramethyl-4-oxo-22-[3-oxo-3-[(E,7R,11R)-3,7,11,15-tetramethylhexadec-2-enoxy]propyl]-23,25-diaza-7,24-diazanidahexacyclo[18.2.1.15,8.110,13.115,18.02,6]hexacosa-1,5,8(26),9,11,13(25),14,16,18,20(23)-decaene-3-carboxylate",
+    "smiles": "CCC1=C(C2=NC1=CC3=C(C4=C([N-]3)C(=C5[C@H]([C@@H](C(=N5)C=C6C(=C(C(=C2)[N-]6)C=C)C)C)CCC(=O)OC/C=C(\\C)/CCC[C@H](C)CCC[C@H](C)CCCC(C)C)[C@H](C4=O)C(=O)OC)C)C.[Mg+2]",
+    "formula": "C55H72MgN4O5"
+  },
+  {
+    "name": "naphthol",
+    "cid": 7005,
+    "iupac_name": "naphthalen-1-ol",
+    "smiles": "C1=CC=C2C(=C1)C=CC=C2O",
+    "formula": "C10H8O"
+  },
+  {
+    "name": "allyl alcohol",
+    "cid": 7858,
+    "iupac_name": "prop-2-en-1-ol",
+    "smiles": "C=CCO",
+    "formula": "C3H6O"
+  },
+  {
+    "name": "propargyl alcohol",
+    "cid": 7859,
+    "iupac_name": "prop-2-yn-1-ol",
+    "smiles": "C#CCO",
+    "formula": "C3H4O"
+  }
+]

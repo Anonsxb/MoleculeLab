@@ -1,0 +1,32 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment
+.env
+
+# Local database
+*.db
+moleculelab.db
+
+# Node / Next.js
+node_modules/
+/.next/
+/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test and tooling caches
+.pytest_cache/
+.ruff_cache/
