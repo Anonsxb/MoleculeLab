@@ -42,15 +42,26 @@ re-investigation. Update it whenever you finish a block of work.
 
 ---
 
-## 2. What is left (do these first tomorrow)
+## 2. Completed (2026-10-14 session)
 
-1. **README.md rewrite** — the root README still describes the Phase-1 skeleton
-   only. It needs: architecture, data model, API reference, descriptor
-   methodology, dataset attribution, migration + seed instructions, testing,
-   troubleshooting (PRD FR-15).
-2. **Commit the tree** — everything is uncommitted; the repo is not git-initialised
-   (`git init` + first commit was never done).
-3. Optional polish: `docs/` folder with architecture notes, Playwright smoke test.
+- [x] **README rewritten** — full FR-15 documentation: architecture, data model,
+  API reference (endpoints + filter params), descriptor methodology, dataset
+  attribution, migration/seed/testing instructions, troubleshooting.
+- [x] **Git initialised and first commit made** — commit `4f95b9e` on branch `main`,
+  80 files, `.venv`/`node_modules`/`.next`/`.db` excluded via `.gitignore`.
+  Local git binary used: `%LOCALAPPDATA%\GitHubDesktop\app-3.6.6\resources\app\git\cmd\git.exe`
+  (git is not on PATH on this machine).
+- [x] **Browser-verified flows** — library renders 181 records with pagination,
+  dashboard shows live dataset provenance, molecule detail renders the RDKit 2D
+  structure (Caffeine, CID:2519), analytics renders all 5 distributions + relation
+  charts, `/api/health`, `/api/datasets`, `/api/molecules`, `/api/compare`,
+  `/api/analytics/*`, `/api/export.csv` all return 200 with real data.
+
+## 3. Optional next steps (not required for MVP)
+
+1. `docs/` architecture notes and a data dictionary as separate pages.
+2. Playwright smoke tests for the four primary flows.
+3. PostgreSQL smoke test against `DATABASE_URL` (SQLite is the tested path).
 
 ### Commands to resume
 ```powershell
