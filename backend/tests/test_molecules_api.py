@@ -1,5 +1,7 @@
 """API tests for molecule search, filtering, sorting, pagination, and detail (FR-03, FR-06)."""
 
+import io
+
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -44,6 +46,27 @@ def test_filter_molecular_weight_range():
     assert result["total"] > 0
     for item in result["items"]:
         assert 100 <= item["molecular_weight"] <= 120
+
+
+def test_unsupported_filter_parameter_is_rejected_not_ignored():
+    """A filter-shaped parameter the server does not implement must fail loudly.
+
+    Regression test: the library once sent molecular_weight_min while the API
+    expected mw_min, and unknown query params were silently dropped, so filters
+    appeared to do nothing.
+    """
+    response = client.get("/api/molecules", params={"molecular_weight_min": 100})
+    assert response.status_code == 400
+    body = response.json()
+    assert body["error"]["code"] == "UNSUPPORTED_FILTER"
+    assert "molecular_weight_min" in body["error"]["details"]["received"]
+    assert "mw_min" in body["error"]["message"]
+
+
+def test_export_rejects_unsupported_filter_parameter():
+    response = client.get("/api/export.csv", params={"molecular_weight_min": 100})
+    assert response.status_code == 400
+    assert response.json()["error"]["code"] == "UNSUPPORTED_FILTER"
 
 
 def test_filter_hbd_count():
@@ -114,6 +137,42 @@ def test_datasets_endpoint_reports_quality():
     assert dataset["record_count"] > 0
     assert dataset["source_name"]
     assert dataset["version_label"]
+    # Database-wide totals must not double-count molecules across datasets.
+    assert result["total_unique_molecules"] > 0
+    assert result["total_entries"] >= result["total_unique_molecules"]
+    assert result["total_valid_entries"] + result["total_invalid_entries"] == result["total_entries"]
+
+
+def test_imported_dataset_counts_toward_totals():
+    """An accepted import linked to existing structures must not create duplicates."""
+    csv_text = (
+        "name,smiles\naudit_unique_xtest,C(F)(F)(F)F\naudit_unique_ytest,CC(C)(C)C\n"
+    )
+    payload = {
+        "file": ("import.csv", io.BytesIO(csv_text.encode("utf-8")), "text/csv")
+    }
+    preview = client.post(
+        "/api/datasets/import/preview",
+        params={"dataset_name": "Audit Totals", "description": ""},
+        files=payload,
+    ).json()
+    before = client.get("/api/datasets").json()["total_unique_molecules"]
+
+    confirm = client.post(
+        "/api/datasets/import",
+        json={
+            "filename": "import.csv",
+            "dataset_name": "Audit Totals",
+            "description": "",
+            "records": preview["accepted"],
+            "quality": preview["quality"],
+        },
+    ).json()
+
+    after = client.get("/api/datasets").json()
+    # Two new molecules added exactly once each.
+    assert after["total_unique_molecules"] == before + 2
+    assert after["total_entries"] >= confirm["created"] + before
 
 
 def test_dataset_detail_by_id():

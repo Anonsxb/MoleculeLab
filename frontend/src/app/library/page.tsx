@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api, DESCRIPTOR_META, type Dataset, type Molecule } from "../../lib/api";
+import { api, DESCRIPTOR_META, describeError, type Dataset, type Molecule } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
 import {
   BackLink,
@@ -16,6 +16,12 @@ import styles from "../subpage.module.css";
 const DESCRIPTORS = ["molecular_weight", "logp", "hbd", "hba", "tpsa"] as const;
 const SORT_FIELDS = ["name", "molecular_weight", "logp", "hbd", "hba", "tpsa", "id"];
 const PAGE_SIZE = 15;
+
+/** Maps a descriptor key to the backend filter prefix (mw_min, logp_min, ...). */
+function filterKey(descriptor: string, bound: "min" | "max"): string {
+  const prefix = descriptor === "molecular_weight" ? "mw" : descriptor;
+  return `${prefix}_${bound}`;
+}
 
 interface FilterState {
   mw_min: string;
@@ -84,7 +90,7 @@ export default function LibraryPage() {
       if (requestId === requestRef.current) setResult(response);
     } catch (err) {
       if (requestId === requestRef.current) {
-        setError(err instanceof Error ? err.message : "Unable to load molecules.");
+        setError(describeError(err, "Unable to load molecules."));
       }
     } finally {
       if (requestId === requestRef.current) setLoading(false);
@@ -193,28 +199,29 @@ export default function LibraryPage() {
             <div className={styles.fieldRow}>
               {DESCRIPTORS.map((descriptor) => (
                 <div className={styles.field} key={descriptor}>
-                  <label htmlFor={`${descriptor}-min`}>
+                  <label htmlFor={`${filterKey(descriptor, "min")}`}>
                     {DESCRIPTOR_META[descriptor].label} ({DESCRIPTOR_META[descriptor].unit})
                   </label>
                   <div style={{ display: "flex", gap: "0.4rem" }}>
                     <input
-                      id={`${descriptor}-min`}
+                      id={filterKey(descriptor, "min")}
                       type="number"
                       step="any"
                       placeholder="min"
-                      value={filters[`${descriptor}_min` as keyof FilterState]}
+                      value={filters[filterKey(descriptor, "min") as keyof FilterState]}
                       onChange={(e) =>
-                        updateFilter(`${descriptor}_min` as keyof FilterState, e.target.value)
+                        updateFilter(filterKey(descriptor, "min") as keyof FilterState, e.target.value)
                       }
                     />
                     <input
+                      id={filterKey(descriptor, "max")}
                       aria-label={`${DESCRIPTOR_META[descriptor].label} maximum`}
                       type="number"
                       step="any"
                       placeholder="max"
-                      value={filters[`${descriptor}_max` as keyof FilterState]}
+                      value={filters[filterKey(descriptor, "max") as keyof FilterState]}
                       onChange={(e) =>
-                        updateFilter(`${descriptor}_max` as keyof FilterState, e.target.value)
+                        updateFilter(filterKey(descriptor, "max") as keyof FilterState, e.target.value)
                       }
                     />
                   </div>
@@ -256,7 +263,16 @@ export default function LibraryPage() {
           </div>
 
           {loading && <LoadingBlock label="Loading molecular records…" />}
-          {error && <ErrorBlock message={error} />}
+          {error && (
+            <>
+              <ErrorBlock message={error} />
+              <div className={styles.buttonRow}>
+                <button className={styles.button} onClick={() => void load()}>
+                  Try again
+                </button>
+              </div>
+            </>
+          )}
 
           {!loading && !error && result && result.items.length === 0 && (
             <EmptyBlock title="No molecules match the current filters.">

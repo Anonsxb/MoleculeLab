@@ -12,9 +12,9 @@ router = APIRouter(tags=["Datasets"])
 
 @router.get("/datasets", response_model=DatasetList)
 def list_datasets(db: Session = Depends(get_db)) -> DatasetList:
-    """List every dataset with its quality summary."""
-    items = dataset_service.list_datasets(db)
-    return DatasetList(items=items, total=len(items))
+    """List every dataset with its quality summary and database-wide totals."""
+    items, totals = dataset_service.list_datasets(db)
+    return DatasetList(items=items, total=len(items), **totals)
 
 
 @router.get("/datasets/{dataset_id}", response_model=DatasetSummary)

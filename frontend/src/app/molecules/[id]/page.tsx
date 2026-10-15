@@ -2,7 +2,7 @@
 
 import { Suspense, useCallback, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { api, formatValue, type MoleculeDetail } from "../../../lib/api";
+import { api, describeError, formatValue, type MoleculeDetail } from "../../../lib/api";
 import { useOnMountLoad } from "../../../lib/hooks";
 import { BackLink, EmptyBlock, ErrorBlock, LoadingBlock, MoleculeStructure } from "../../components/states";
 import styles from "../../subpage.module.css";
@@ -37,7 +37,7 @@ function MoleculeDetailWorkspace() {
     try {
       setMolecule(await api.molecule(moleculeId));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to load this molecule.");
+      setError(describeError(err, "Unable to load this molecule."));
     } finally {
       setLoading(false);
     }

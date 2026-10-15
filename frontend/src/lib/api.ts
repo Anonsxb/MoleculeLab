@@ -182,12 +182,7 @@ export class ApiFailure extends Error {
   }
 }
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${API_URL}/api${path}`, {
-    ...init,
-    headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
-    cache: "no-store",
-  });
+async function handleResponse<T>(response: Response): Promise<T> {
   const text = await response.text();
   let payload: unknown = null;
   if (text) {
@@ -208,11 +203,51 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return payload as T;
 }
 
+/** Thrown when the backend cannot be reached at all (network failure). */
+export class ApiUnreachableError extends Error {
+  constructor() {
+    super("The MoleculeLab API is not reachable. Make sure the backend server is running on port 8000.");
+    this.name = "ApiUnreachableError";
+  }
+}
+
+export function describeError(error: unknown, fallback: string): string {
+  /** Turn any API failure into a user-facing explanation. */
+  if (error instanceof ApiFailure) return error.message;
+  if (error instanceof TypeError) {
+    return new ApiUnreachableError().message;
+  }
+  if (error instanceof Error && error.message) return error.message;
+  return fallback;
+}
+
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}/api${path}`, {
+      ...init,
+      headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
+      cache: "no-store",
+    });
+  } catch {
+    throw new ApiUnreachableError();
+  }
+  return handleResponse<T>(response);
+}
+
 export const api = {
   health: () => request<{ status: string; app_name: string; version: string; rdkit_version: string }>(
     "/health",
   ),
-  datasets: () => request<{ items: Dataset[]; total: number }>("/datasets"),
+  datasets: () =>
+    request<{
+      items: Dataset[];
+      total: number;
+      total_unique_molecules: number;
+      total_entries: number;
+      total_valid_entries: number;
+      total_invalid_entries: number;
+    }>("/datasets"),
   dataset: (id: number) => request<Dataset>(`/datasets/${id}`),
 
   molecules: (params: Record<string, string | number | undefined>) => {
@@ -270,11 +305,20 @@ export const api = {
     warnings: string[];
   }>("/export/meta"),
 
-  previewImport: (file: File, datasetName: string, description: string) =>
-    request<ImportPreview>(
-      `/datasets/import/preview?dataset_name=${encodeURIComponent(datasetName)}&description=${encodeURIComponent(description)}`,
-      { method: "POST", body: file, headers: {} },
-    ),
+  previewImport: async (file: File, datasetName: string, description: string) => {
+    const form = new FormData();
+    form.append("file", file, file.name);
+    let response: Response;
+    try {
+      response = await fetch(
+        `${API_URL}/api/datasets/import/preview?dataset_name=${encodeURIComponent(datasetName)}&description=${encodeURIComponent(description)}`,
+        { method: "POST", body: form },
+      );
+    } catch {
+      throw new ApiUnreachableError();
+    }
+    return handleResponse<ImportPreview>(response);
+  },
   confirmImport: (payload: unknown) =>
     request<{ dataset_id: number; dataset_name: string; created: number; linked: number }>(
       "/datasets/import",

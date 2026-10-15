@@ -2,7 +2,7 @@
 
 from typing import Optional
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from fastapi.responses import PlainTextResponse
 from sqlalchemy.orm import Session
 
@@ -13,6 +13,35 @@ from app.services import export_service
 router = APIRouter(tags=["Export"])
 
 DESCRIPTORS = ["molecular_weight", "logp", "hbd", "hba", "tpsa"]
+
+_FILTER_SHAPE = ("_min", "_max")
+_ALLOWED_FILTERS = [
+    f"{prefix}_{bound}" for prefix in ("mw", "logp", "hbd", "hba", "tpsa") for bound in ("min", "max")
+]
+
+
+def _reject_unknown_filters(request: Request) -> None:
+    """Reject filter-shaped query parameters that the server does not implement."""
+    unsupported = [
+        key
+        for key in request.query_params
+        if key.endswith(_FILTER_SHAPE)
+        and key not in _ALLOWED_FILTERS
+    ]
+    if unsupported:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={
+                "error": {
+                    "code": "UNSUPPORTED_FILTER",
+                    "message": (
+                        "Unsupported filter(s): " + ", ".join(sorted(unsupported)) + ". "
+                        "Supported: " + ", ".join(sorted(_ALLOWED_FILTERS)) + "."
+                    ),
+                    "details": {"received": sorted(unsupported)},
+                }
+            },
+        )
 
 
 @router.get("/export.csv", response_class=PlainTextResponse)
@@ -29,9 +58,12 @@ def export_csv(
     hba_max: Optional[int] = None,
     tpsa_min: Optional[float] = None,
     tpsa_max: Optional[float] = None,
+    request: Request = None,
     db: Session = Depends(get_db),
 ):
     """Export records matching the active filters as CSV."""
+    if request is not None:
+        _reject_unknown_filters(request)
     filters = {
         key: value
         for key, value in {

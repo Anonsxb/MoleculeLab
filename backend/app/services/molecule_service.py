@@ -30,6 +30,9 @@ FILTER_FIELDS = {
     "tpsa": Molecule.tpsa,
 }
 
+# Every valid filter query parameter name, e.g. mw_min, logp_max, tpsa_min.
+FILTER_NAMES = [f"{prefix}_{bound}" for prefix in FILTER_FIELDS for bound in ("min", "max")]
+
 
 def _apply_dataset_filter(stmt: Select, dataset_id: Optional[int]) -> Select:
     if dataset_id is not None:

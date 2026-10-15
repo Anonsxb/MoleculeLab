@@ -13,7 +13,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { api, formatValue, type Dataset, type Distribution } from "../../lib/api";
+import { api, describeError, formatValue, type Dataset, type Distribution } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
 import { BackLink, EmptyBlock, ErrorBlock, LoadingBlock } from "../components/states";
 import styles from "../subpage.module.css";
@@ -74,7 +74,7 @@ export default function AnalyticsPage() {
       const pair = CORRELATION_PAIRS[scatterKey];
       setScatter(await api.scatter(pair.x, pair.y, datasetParam));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to load analytics.");
+      setError(describeError(err, "Unable to load analytics."));
     } finally {
       setLoading(false);
     }

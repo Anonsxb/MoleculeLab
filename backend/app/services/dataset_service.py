@@ -68,10 +68,20 @@ def dataset_quality(db: Session, dataset_id: int) -> tuple[int, int]:
     return valid, invalid
 
 
-def list_datasets(db: Session) -> list[DatasetSummary]:
-    """List all datasets with quality summaries."""
+def list_datasets(db: Session) -> tuple[list[DatasetSummary], dict[str, int]]:
+    """List all datasets with quality summaries and database-wide totals.
+
+    Totals distinguish unique molecules from dataset entries: the same molecule
+    may appear in more than one dataset without being stored twice.
+    """
     datasets = list(db.execute(select(Dataset).order_by(Dataset.id)).scalars())
     summaries: list[DatasetSummary] = []
+    totals = {
+        "total_unique_molecules": 0,
+        "total_entries": 0,
+        "total_valid_entries": 0,
+        "total_invalid_entries": 0,
+    }
     for dataset in datasets:
         valid, invalid = dataset_quality(db, dataset.id)
         summaries.append(
@@ -88,7 +98,14 @@ def list_datasets(db: Session) -> list[DatasetSummary]:
                 invalid_count=invalid,
             )
         )
-    return summaries
+        totals["total_entries"] += valid + invalid
+        totals["total_valid_entries"] += valid
+        totals["total_invalid_entries"] += invalid
+
+    totals["total_unique_molecules"] = (
+        db.execute(select(func.count()).select_from(Molecule)).scalar() or 0
+    )
+    return summaries, totals
 
 
 def get_dataset(db: Session, dataset_id: int) -> Optional[Dataset]:

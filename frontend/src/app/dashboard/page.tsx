@@ -10,10 +10,20 @@ import styles from "../subpage.module.css";
 interface DashboardData {
   health: { status: string; app_name: string; version: string; rdkit_version: string } | null;
   datasets: Dataset[];
+  totals: {
+    total_unique_molecules: number;
+    total_entries: number;
+    total_valid_entries: number;
+    total_invalid_entries: number;
+  };
 }
 
 export default function DashboardPage() {
-  const [data, setData] = useState<DashboardData>({ health: null, datasets: [] });
+  const [data, setData] = useState<DashboardData>({
+    health: null,
+    datasets: [],
+    totals: { total_unique_molecules: 0, total_entries: 0, total_valid_entries: 0, total_invalid_entries: 0 },
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,7 +35,7 @@ export default function DashboardPage() {
         api.health(),
         api.datasets(),
       ]);
-      setData({ health, datasets: datasetResponse.items });
+      setData({ health, datasets: datasetResponse.items, totals: datasetResponse });
     } catch (err) {
       setError(
         err instanceof Error
@@ -39,10 +49,7 @@ export default function DashboardPage() {
 
   useOnMountLoad(load);
 
-  const { health, datasets } = data;
-  const records = datasets.reduce((sum, d) => sum + d.record_count, 0);
-  const valid = datasets.reduce((sum, d) => sum + d.valid_count, 0);
-  const invalid = datasets.reduce((sum, d) => sum + d.invalid_count, 0);
+  const { health, datasets, totals } = data;
 
   return (
     <div className={styles.container}>
@@ -78,16 +85,16 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div className={styles.specItem}>
-                  <div className={styles.specLabel}>Molecular records</div>
-                  <div className={styles.specValue}>{records}</div>
+                  <div className={styles.specLabel}>Unique molecules</div>
+                  <div className={styles.specValue}>{totals.total_unique_molecules}</div>
                 </div>
                 <div className={styles.specItem}>
-                  <div className={styles.specLabel}>Valid records</div>
-                  <div className={styles.specValue}>{valid}</div>
+                  <div className={styles.specLabel}>Dataset records (valid)</div>
+                  <div className={styles.specValue}>{totals.total_valid_entries}</div>
                 </div>
                 <div className={styles.specItem}>
-                  <div className={styles.specLabel}>Invalid records</div>
-                  <div className={styles.specValue}>{invalid}</div>
+                  <div className={styles.specLabel}>Dataset records (invalid)</div>
+                  <div className={styles.specValue}>{totals.total_invalid_entries}</div>
                 </div>
                 <div className={styles.specItem}>
                   <div className={styles.specLabel}>RDKit engine</div>
@@ -100,6 +107,11 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
+              <p className={styles.hint} style={{ marginTop: "0.75rem" }}>
+                “Unique molecules” counts distinct structures in the database. A molecule can belong
+                to several datasets, so dataset records may total more than unique molecules —
+                the two figures are reported separately so neither is double-counted.
+              </p>
             </section>
 
             <section className={styles.section} aria-label="Datasets">

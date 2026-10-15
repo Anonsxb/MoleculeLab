@@ -77,8 +77,12 @@ export default function ImportPage() {
       });
       setImported(result);
       setPreview(null);
+      const linkedNote =
+        result.linked > 0
+          ? ` ${result.linked} accepted structure(s) already existed in the database and were linked to their existing molecule records — no duplicates were stored.`
+          : "";
       setStatus(
-        `Imported ${result.created} record(s) into dataset “${result.dataset_name}” (id ${result.dataset_id}); ${result.linked} duplicate structure(s) linked to existing molecules.`,
+        `Dataset “${result.dataset_name}” created (id ${result.dataset_id}) with ${result.created} new record(s).${linkedNote}`,
       );
     } catch (err) {
       setError(err instanceof ApiFailure ? err.message : "The import could not be completed.");
@@ -197,8 +201,14 @@ export default function ImportPage() {
             <div className={styles.card}>
               <p style={{ fontSize: "0.9rem", color: "#cbd5e1", marginBottom: "1rem" }}>
                 Dataset “{imported.dataset_name}” (id {imported.dataset_id}) was created with{" "}
-                {imported.created} new record(s) and {imported.linked} duplicate(s) linked to
-                existing molecules.
+                {imported.created} new record(s)
+                {imported.linked > 0 ? (
+                  <>
+                    , and {imported.linked} accepted structure(s) that already existed in the
+                    database were linked to their existing molecule records instead of being
+                    duplicated.
+                  </>
+                ) : null}
               </p>
               <div className={styles.buttonRow}>
                 <Link href="/library" className={styles.button}>

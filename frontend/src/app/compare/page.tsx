@@ -1,8 +1,8 @@
-﻿"use client";
+"use client";
 
 import { Suspense, useCallback, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { api, formatValue, type CompareResult, type MoleculeDetail, type Molecule } from "../../lib/api";
+import { api, describeError, formatValue, type CompareResult, type MoleculeDetail, type Molecule } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
 import {
   BackLink,
@@ -47,17 +47,26 @@ function CompareWorkspace() {
       setSuggestions(response.items);
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Search failed.");
+      setError(describeError(err, "Search failed."));
     }
   }
 
-  function addMolecule(molecule: Molecule | MoleculeDetail) {
+  async function addMolecule(molecule: Molecule | MoleculeDetail) {
     setResult(null);
     setSelected((previous) => {
       if (previous.some((item) => item.id === molecule.id)) return previous;
       if (previous.length >= 4) return previous;
       return [...previous, molecule as MoleculeDetail];
     });
+    // Search results omit the 2D depiction, so load the full detail for the card.
+    try {
+      const detail = await api.molecule(molecule.id);
+      setSelected((previous) =>
+        previous.map((item) => (item.id === detail.id ? detail : item)),
+      );
+    } catch {
+      // The molecule stays in the comparison; only its depiction is unavailable.
+    }
   }
 
   function removeMolecule(id: number) {
@@ -112,11 +121,11 @@ function CompareWorkspace() {
 
             {suggestions.length > 0 && (
               <ul className={styles.suggestions} aria-label="Search suggestions">
-                {suggestions.map((molecule) => (
+                    {suggestions.map((molecule) => (
                   <li key={molecule.id}>
                     <button
                       className={styles.suggestion}
-                      onClick={() => addMolecule(molecule)}
+                      onClick={() => void addMolecule(molecule)}
                       disabled={
                         selected.some((item) => item.id === molecule.id) || selected.length >= 4
                       }

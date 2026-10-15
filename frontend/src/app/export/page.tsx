@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import Link from "next/link";
-import { api, type Dataset } from "../../lib/api";
+import { api, describeError, type Dataset } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
 import { BackLink, ErrorBlock, LoadingBlock } from "../components/states";
 import styles from "../subpage.module.css";
@@ -68,7 +68,7 @@ export default function ExportPage() {
       const response = await api.molecules(params);
       setPreviewCount(response.total);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to count matching records.");
+      setError(describeError(err, "Unable to count matching records."));
     }
   }
 

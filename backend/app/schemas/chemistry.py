@@ -88,7 +88,11 @@ class DatasetSummary(BaseModel):
 
 
 class DatasetList(BaseModel):
-    """List of datasets."""
+    """List of datasets with database-wide totals."""
 
     items: List[DatasetSummary]
     total: int
+    total_unique_molecules: int = 0
+    total_entries: int = 0
+    total_valid_entries: int = 0
+    total_invalid_entries: int = 0
