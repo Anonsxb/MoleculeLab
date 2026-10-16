@@ -4,6 +4,7 @@ import { Suspense, useCallback, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { api, describeError, formatValue, type CompareResult, type MoleculeDetail, type Molecule } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
+import SearchBox from "../components/SearchBox";
 import {
   BackLink,
   EmptyBlock,
@@ -15,7 +16,6 @@ import styles from "../subpage.module.css";
 function CompareWorkspace() {
   const searchParams = useSearchParams();
   const [selected, setSelected] = useState<MoleculeDetail[]>([]);
-  const [search, setSearch] = useState("");
   const [suggestions, setSuggestions] = useState<Molecule[]>([]);
   const [result, setResult] = useState<CompareResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -39,11 +39,9 @@ function CompareWorkspace() {
 
   useOnMountLoad(loadFromQuery);
 
-  async function runSearch(event: React.FormEvent) {
-    event.preventDefault();
-    if (!search.trim()) return;
+  async function searchByName(term: string) {
     try {
-      const response = await api.molecules({ q: search.trim(), page_size: 8 });
+      const response = await api.molecules({ q: term, page_size: 8 });
       setSuggestions(response.items);
       setError(null);
     } catch (err) {
@@ -51,7 +49,7 @@ function CompareWorkspace() {
     }
   }
 
-  async function addMolecule(molecule: Molecule | MoleculeDetail) {
+  async function addMolecule(molecule: Molecule | MoleculeDetail | { id: number; display_name: string }) {
     setResult(null);
     setSelected((previous) => {
       if (previous.some((item) => item.id === molecule.id)) return previous;
@@ -80,7 +78,7 @@ function CompareWorkspace() {
     try {
       setResult(await api.compare(selected.map((molecule) => molecule.id)));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Comparison failed.");
+      setError(describeError(err, "Comparison failed."));
     } finally {
       setLoading(false);
     }
@@ -94,34 +92,37 @@ function CompareWorkspace() {
         <p className={styles.subtitle}>
           Select between two and four molecules to inspect their calculated descriptors side by
           side. Differences are absolute values relative to the first selected molecule. Comparison
-          is descriptive only â€” no molecule is ranked as therapeutically superior.
+          is descriptive only — no molecule is ranked as therapeutically superior.
         </p>
 
         <section className={styles.section} aria-label="Add molecules">
           <h2 className={styles.sectionTitle}>1. Add molecules ({selected.length} of 4)</h2>
           <div className={styles.card}>
-            <form className={styles.form} onSubmit={runSearch}>
-              <div className={styles.field}>
-                <label htmlFor="compare-search">Search by name, SMILES, or external ID</label>
-                <input
-                  id="compare-search"
-                  type="search"
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  placeholder="e.g. ethanol"
-                  autoComplete="off"
-                />
-              </div>
-              <div className={styles.buttonRow}>
-                <button className={styles.button} type="submit">
-                  Find molecules
-                </button>
-              </div>
-            </form>
+            <SearchBox
+              id="compare-search"
+              label="Search by name, SMILES, or external ID"
+              placeholder="e.g. caffe — start typing for suggestions"
+              submitLabel="Find molecules"
+              onSearch={(term) => void searchByName(term)}
+              onSelect={(molecule) => {
+                setSuggestions([]);
+                void addMolecule(molecule);
+              }}
+              isSelected={(id) => selected.some((item) => item.id === id)}
+            />
+            <p className={styles.hint} style={{ marginTop: "0.75rem" }}>
+              Pick a suggestion to add it instantly, or press Enter to list full matches below the
+              search field.
+            </p>
+          </div>
 
-            {suggestions.length > 0 && (
+          {suggestions.length > 0 && (
+            <div className={styles.card} style={{ marginTop: "1rem" }}>
+              <h3 className={styles.sectionTitle} style={{ fontSize: "1rem" }}>
+                Full matches ({suggestions.length})
+              </h3>
               <ul className={styles.suggestions} aria-label="Search suggestions">
-                    {suggestions.map((molecule) => (
+                {suggestions.map((molecule) => (
                   <li key={molecule.id}>
                     <button
                       className={styles.suggestion}
@@ -133,7 +134,7 @@ function CompareWorkspace() {
                       <span>
                         <strong>{molecule.display_name}</strong>{" "}
                         <span className={styles.hint}>
-                          MW {formatValue(molecule.molecular_weight)} Â·{" "}
+                          MW {formatValue(molecule.molecular_weight)} ·{" "}
                           {molecule.formula || "no formula"}
                         </span>
                       </span>
@@ -144,8 +145,8 @@ function CompareWorkspace() {
                   </li>
                 ))}
               </ul>
-            )}
-          </div>
+            </div>
+          )}
         </section>
 
         <section className={styles.section} aria-label="Selected molecules">
@@ -166,7 +167,7 @@ function CompareWorkspace() {
                         onClick={() => removeMolecule(molecule.id)}
                         aria-label={`Remove ${molecule.display_name} from comparison`}
                       >
-                        remove âœ•
+                        remove ✕
                       </button>
                     </div>
                     <MoleculeStructure
@@ -180,7 +181,7 @@ function CompareWorkspace() {
                       </div>
                       <div>
                         <span className={styles.specLabel}>Formula</span>
-                        <span>{molecule.formula || "â€”"}</span>
+                        <span>{molecule.formula || "—"}</span>
                       </div>
                       <div>
                         <span className={styles.specLabel}>ID</span>
@@ -196,7 +197,7 @@ function CompareWorkspace() {
                   onClick={() => void runCompare()}
                   disabled={selected.length < 2 || loading}
                 >
-                  {loading ? "Comparingâ€¦" : `Compare ${selected.length} molecules`}
+                  {loading ? "Comparing…" : `Compare ${selected.length} molecules`}
                 </button>
                 <button className={styles.secondaryButton} onClick={() => setSelected([])}>
                   Clear all
@@ -218,8 +219,7 @@ function CompareWorkspace() {
               <div className={styles.tableWrap}>
                 <table className={styles.table}>
                   <caption className={styles.hint}>
-                    Absolute differences are relative to the first selected molecule
-                    {" "}
+                    Absolute differences are relative to the first selected molecule{" "}
                     ({result.molecules[0]?.display_name}). A dash marks a missing value.
                   </caption>
                   <thead>

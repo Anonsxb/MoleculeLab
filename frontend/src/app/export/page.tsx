@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 import { api, describeError, type Dataset } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
+import SearchBox from "../components/SearchBox";
 import { BackLink, ErrorBlock, LoadingBlock } from "../components/states";
 import styles from "../subpage.module.css";
 
@@ -119,14 +120,16 @@ export default function ExportPage() {
           <div className={styles.card}>
             <div className={styles.fieldRow}>
               <div className={styles.field}>
-                <label htmlFor="export-q">Search term</label>
-                <input
+                <SearchBox
                   id="export-q"
-                  type="search"
-                  value={filters.q}
-                  onChange={(event) => setFilters({ ...filters, q: event.target.value })}
-                  placeholder="name, SMILES, or ID"
+                  label="Search term"
+                  placeholder="e.g. caffe — start typing for suggestions"
+                  submitLabel="Apply"
+                  onSearch={(term) => setFilters({ ...filters, q: term })}
                 />
+                <p className={styles.hint} style={{ marginTop: "0.5rem" }}>
+                  Choosing a suggestion fills the search term; press Enter to apply it to the export.
+                </p>
               </div>
               <div className={styles.field}>
                 <label htmlFor="export-dataset">Dataset</label>

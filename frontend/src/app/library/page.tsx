@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api, DESCRIPTOR_META, describeError, type Dataset, type Molecule } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
+import SearchBox from "../components/SearchBox";
 import {
   BackLink,
   EmptyBlock,
@@ -53,7 +54,6 @@ export default function LibraryPage() {
   const [datasets, setDatasets] = useState<Dataset[]>([]);
   const [datasetFilter, setDatasetFilter] = useState<string>("");
   const [query, setQuery] = useState("");
-  const [searchInput, setSearchInput] = useState("");
   const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS);
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -99,12 +99,6 @@ export default function LibraryPage() {
 
   useOnMountLoad(load);
 
-  function applySearch(event: React.FormEvent) {
-    event.preventDefault();
-    setPage(1);
-    setQuery(searchInput.trim());
-  }
-
   function updateFilter(key: keyof FilterState, value: string) {
     setPage(1);
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -113,7 +107,6 @@ export default function LibraryPage() {
   function clearFilters() {
     setFilters(EMPTY_FILTERS);
     setQuery("");
-    setSearchInput("");
     setDatasetFilter("");
     setSortBy("name");
     setSortOrder("asc");
@@ -144,52 +137,59 @@ export default function LibraryPage() {
         <section className={styles.section} aria-label="Search the library">
           <h2 className={styles.sectionTitle}>Search</h2>
           <div className={styles.card}>
-            <form className={styles.form} onSubmit={applySearch}>
-              <div className={styles.fieldRow}>
-                <div className={styles.field}>
-                  <label htmlFor="library-search">Name, SMILES, or external ID</label>
-                  <input
-                    id="library-search"
-                    type="search"
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    placeholder="e.g. caffeine, ethanol, CID:2519"
-                    autoComplete="off"
-                  />
-                </div>
-                <div className={styles.field}>
-                  <label htmlFor="library-dataset">Dataset</label>
-                  <select
-                    id="library-dataset"
-                    value={datasetFilter}
-                    onChange={(e) => {
-                      setPage(1);
-                      setDatasetFilter(e.target.value);
-                    }}
-                  >
-                    <option value="">All datasets</option>
-                    {datasets.map((dataset) => (
-                      <option key={dataset.id} value={dataset.id}>
-                        {dataset.name} ({dataset.record_count})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className={styles.buttonRow}>
-                <button type="submit" className={styles.button}>
-                  Search
-                </button>
-                <button
-                  type="button"
-                  className={styles.secondaryButton}
-                  onClick={clearFilters}
-                  disabled={activeFilterCount === 0 && !query && !datasetFilter}
+            <SearchBox
+              id="library-search"
+              label="Name, SMILES, or external ID"
+              placeholder="e.g. caffe — start typing for suggestions"
+              submitLabel="Search"
+              onSearch={(term) => {
+                setPage(1);
+                setQuery(term);
+              }}
+              onSelect={undefined}
+            />
+            <p className={styles.hint} style={{ marginTop: "0.75rem" }}>
+              Suggestions appear as you type (two characters minimum). Press Enter to run the full
+              filtered search.
+            </p>
+          </div>
+
+          <div className={styles.card} style={{ marginTop: "1rem" }}>
+            <div className={styles.fieldRow}>
+              <div className={styles.field}>
+                <label htmlFor="library-dataset">Dataset</label>
+                <select
+                  id="library-dataset"
+                  value={datasetFilter}
+                  onChange={(e) => {
+                    setPage(1);
+                    setDatasetFilter(e.target.value);
+                  }}
                 >
-                  Reset all filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
-                </button>
+                  <option value="">All datasets</option>
+                  {datasets.map((dataset) => (
+                    <option key={dataset.id} value={dataset.id}>
+                      {dataset.name} ({dataset.record_count})
+                    </option>
+                  ))}
+                </select>
               </div>
-            </form>
+            </div>
+            <div className={styles.buttonRow}>
+              <button
+                type="button"
+                className={styles.secondaryButton}
+                onClick={clearFilters}
+                disabled={activeFilterCount === 0 && !query && !datasetFilter}
+              >
+                Reset all filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
+              </button>
+              {query && (
+                <span className={styles.hint}>
+                  Showing results for “{query}”
+                </span>
+              )}
+            </div>
           </div>
         </section>
 

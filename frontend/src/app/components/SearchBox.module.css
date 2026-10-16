@@ -1,0 +1,140 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.inputRow {
+  display: flex;
+  gap: 0.6rem;
+  align-items: stretch;
+}
+
+.inputRow input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  color: var(--text-main);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.88rem;
+  font-family: inherit;
+}
+
+.inputRow input:focus-visible {
+  outline: 2px solid var(--cyan-accent);
+  outline-offset: 1px;
+  border-color: var(--cyan-accent);
+}
+
+.submit {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.submit:hover {
+  transform: translateY(-1px);
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--cyan-accent);
+  outline-offset: 2px;
+}
+
+.list {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  background: #0b1424;
+  border: 1px solid var(--border-accent);
+  border-radius: 10px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.option {
+  margin: 0;
+}
+
+.optionButton {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0.7rem;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-main);
+  font-size: 0.86rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.optionButton:hover,
+.option.active .optionButton {
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.optionButton:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.optionButton:focus-visible {
+  outline: 2px solid var(--cyan-accent);
+  outline-offset: -2px;
+}
+
+.optionLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.optionMeta {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+}
+
+.optionAction {
+  color: var(--cyan-accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status,
+.error {
+  padding: 0.55rem 0.7rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.error {
+  color: #f87171;
+}
