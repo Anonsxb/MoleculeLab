@@ -142,7 +142,6 @@ function MoleculeDetailWorkspace() {
                       <th scope="col">Value</th>
                       <th scope="col">Typical (median)</th>
                       <th scope="col">Unit</th>
-                      <th scope="col">Method</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -159,9 +158,6 @@ function MoleculeDetailWorkspace() {
                               : formatValue(ref.median)}
                           </td>
                           <td>{entry?.unit || "—"}</td>
-                          <td>
-                            <code className={styles.code}>{entry?.method || "—"}</code>
-                          </td>
                         </tr>
                       );
                     })}
@@ -181,6 +177,31 @@ function MoleculeDetailWorkspace() {
                 . Values are stored at full precision and rounded here for display. Missing values
                 are shown as “—” and are never replaced with zero.
               </p>
+              <details className={styles.details}>
+                <summary>Technical details: exact calculation methods</summary>
+                <div className={styles.tableWrap}>
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th scope="col">Descriptor</th>
+                        <th scope="col">Method</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {DESCRIPTOR_ORDER.map((key) => (
+                        <tr key={key}>
+                          <td>{key.replace("_", " ")}</td>
+                          <td>
+                            <code className={styles.code}>
+                              {molecule.descriptors?.[key]?.method || "—"}
+                            </code>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </details>
             </section>
 
             <section className={styles.section} aria-label="What each descriptor means">

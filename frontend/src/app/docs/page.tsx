@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "../subpage.module.css";
 import { BackLink } from "../components/states";
 
@@ -111,20 +112,18 @@ export default function DocsPage() {
           </div>
         </section>
 
-        <section className={styles.section} aria-label="API reference">
-          <h2 className={styles.sectionTitle}>API reference</h2>
+        <section className={styles.section} aria-label="For developers">
+          <h2 className={styles.sectionTitle}>For developers</h2>
           <div className={styles.card}>
-            <ul className={styles.list}>
-              <li><code>GET /api/health</code> — live service status (implemented).</li>
-              <li><code>GET /api/datasets</code>, <code>GET /api/datasets/{"{id}"}</code> — planned (FR-02).</li>
-              <li><code>GET /api/molecules</code>, <code>GET /api/molecules/{"{id}"}</code> — planned (FR-03, FR-06).</li>
-              <li><code>POST /api/molecules/validate</code> — planned (FR-04).</li>
-              <li><code>POST /api/datasets/import</code> — planned (FR-10).</li>
-              <li><code>POST /api/compare</code> — planned (FR-08).</li>
-              <li><code>GET /api/analytics/distribution</code>, <code>GET /api/analytics/scatter</code> — planned (FR-09).</li>
-              <li><code>GET /api/export.csv</code> — planned (FR-12).</li>
-            </ul>
-            <p className={styles.hint}>Interactive docs (implemented endpoints only): /docs on the backend.</p>
+            <p style={{ fontSize: "0.88rem", color: "#cbd5e1", marginBottom: "1rem" }}>
+              Want to call MoleculeLab from your own code? Endpoints, parameters, examples, and
+              error codes live on the developer page.
+            </p>
+            <div className={styles.buttonRow}>
+              <Link href="/developers" className={styles.button}>
+                Open developer docs →
+              </Link>
+            </div>
           </div>
         </section>
       </main>

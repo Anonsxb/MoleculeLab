@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: '/import', label: 'Import' },
   { href: '/export', label: 'Export' },
   { href: '/docs', label: 'Docs' },
+  { href: '/developers', label: 'Developers' },
 ];
 
 function NavLinks() {
