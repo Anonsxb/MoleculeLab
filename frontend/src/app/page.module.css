@@ -182,6 +182,33 @@
   margin-bottom: 1.25rem;
 }
 
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cyan-accent);
+  margin-bottom: 0.85rem;
+}
+
+.devLinks {
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.devLinks a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.devLinks a:hover,
+.devLinks a:focus-visible {
+  color: var(--cyan-accent);
+}
+
 .accentText {
   background: linear-gradient(135deg, var(--cyan-accent) 0%, #38bdf8 100%);
   -webkit-background-clip: text;

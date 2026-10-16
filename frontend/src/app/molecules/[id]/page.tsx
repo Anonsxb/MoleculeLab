@@ -9,8 +9,34 @@ import styles from "../../subpage.module.css";
 
 const DESCRIPTOR_ORDER = ["molecular_weight", "logp", "hbd", "hba", "tpsa"] as const;
 
-const EXPLANATIONS: Record<string, string> = {
-  molecular_weight:
+function CopyButton({ text, label }: { text: string; label: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      className={styles.linkButton}
+      onClick={() => void handleCopy()}
+      aria-label={label}
+      aria-live="polite"
+      style={{ marginTop: "0.4rem" }}
+    >
+      {copied ? "Copied ✓" : "Copy"}
+    </button>
+  );
+}
+
+const EXPLANATIONS: Record<string, string> = {  molecular_weight:
     "Sums standard atomic masses across the molecular formula. A purely physical mass measure: larger values mean a heavier molecule and carry no information about activity or safety.",
   logp:
     "A Crippen atom-contribution estimate of octanol–water partitioning. Higher values suggest more lipid-like character within this model. This is a calculated estimate, not an experimental logP.",
@@ -73,10 +99,14 @@ function MoleculeDetailWorkspace() {
                   <div className={styles.specItem}>
                     <div className={styles.specLabel}>Original SMILES</div>
                     <div className={styles.specValue}>{molecule.original_smiles}</div>
+                    <CopyButton text={molecule.original_smiles} label="Copy original SMILES" />
                   </div>
                   <div className={styles.specItem}>
                     <div className={styles.specLabel}>Canonical SMILES</div>
                     <div className={styles.specValue}>{molecule.canonical_smiles || "—"}</div>
+                    {molecule.canonical_smiles && (
+                      <CopyButton text={molecule.canonical_smiles} label="Copy canonical SMILES" />
+                    )}
                   </div>
                   <div className={styles.specItem}>
                     <div className={styles.specLabel}>Validation status</div>

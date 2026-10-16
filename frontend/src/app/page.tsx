@@ -98,21 +98,33 @@ export default function Home() {
         {/* Hero Section */}
         <section className={styles.heroSection}>
           <div className={styles.heroText}>
+            <p className={styles.eyebrow}>Educational computational chemistry</p>
             <h1 className={styles.heroHeading}>
-              Precision <span className={styles.accentText}>Molecular Informatics</span> Workbench
+              Explore molecules. <span className={styles.accentText}>Understand their properties.</span>
             </h1>
             <p className={styles.heroDescription}>
-              A full-stack computational chemistry platform with a backend-driven <strong>RDKit</strong> chemistry engine,
-              relational data models, verified molecular descriptor pipelines, and interactive structural analytics.
+              Search 180+ real molecules, see their structures, compare calculated properties
+              side by side, and learn what descriptors like LogP and TPSA actually mean —
+              all computed transparently with open chemistry methods.
             </p>
             <div className={styles.heroLinks}>
-              <a href={`${apiUrl}/docs`} target="_blank" rel="noreferrer" className={styles.primaryLink}>
-                Explore Interactive API Docs (Swagger) →
-              </a>
-              <a href={`${apiUrl}/api/health`} target="_blank" rel="noreferrer" className={styles.secondaryLink}>
-                Inspect /api/health JSON
-              </a>
+              <Link href="/library" className={styles.primaryLink}>
+                Browse the molecule library →
+              </Link>
+              <Link href="/docs" className={styles.secondaryLink}>
+                How calculations work
+              </Link>
             </div>
+            <p className={styles.devLinks}>
+              Developers:{" "}
+              <a href={`${apiUrl}/docs`} target="_blank" rel="noreferrer">
+                API docs
+              </a>
+              {" · "}
+              <a href={`${apiUrl}/api/health`} target="_blank" rel="noreferrer">
+                health check
+              </a>
+            </p>
           </div>
 
           {/* Engine Status Card */}
@@ -152,8 +164,8 @@ export default function Home() {
                   <div className={styles.specValueAccent}>v{health.rdkit_version}</div>
                 </div>
                 <div className={styles.specItem}>
-                  <div className={styles.specLabel}>Python Runtime</div>
-                  <div className={styles.specValue}>Python 3.14.5 (Verified)</div>
+                  <div className={styles.specLabel}>App Version</div>
+                  <div className={styles.specValue}>v{health.version}</div>
                 </div>
                 <div className={styles.specItem}>
                   <div className={styles.specLabel}>Environment</div>
@@ -236,62 +248,61 @@ export default function Home() {
 
         {/* Workstations Roadmap */}
         <section className={styles.sectionContainer}>
-          <h2 className={styles.sectionTitle}>Workbench Architecture & Modules</h2>
+          <h2 className={styles.sectionTitle}>What you can do here</h2>
           <p className={styles.sectionSubtitle}>
-            Select a module to open its workspace. Modules whose backend endpoints are still under
-            construction say so explicitly instead of showing placeholder data.
+            Six workspaces, each connected to live data. Pick one to start exploring.
           </p>
           <div className={styles.modulesGrid}>
-            <Link href="/dashboard" className={styles.moduleCard} aria-label="Open live dashboard">
+            <Link href="/dashboard" className={styles.moduleCard} aria-label="Open dashboard">
               <div className={styles.moduleIcon} aria-hidden="true">📊</div>
-              <div className={styles.moduleTitle}>FR-01: Live Dashboard</div>
+              <div className={styles.moduleTitle}>Dashboard</div>
               <p className={styles.moduleText}>
-                Live counts of datasets, valid records, and ingestion metrics computed directly from database queries.
+                At-a-glance counts of datasets and molecules, computed live from the database.
               </p>
               <span className={styles.cardCta} aria-hidden="true">Open dashboard →</span>
             </Link>
 
             <Link href="/library" className={styles.moduleCard} aria-label="Open molecular library">
               <div className={styles.moduleIcon} aria-hidden="true">🔍</div>
-              <div className={styles.moduleTitle}>FR-03: Molecular Library</div>
+              <div className={styles.moduleTitle}>Molecular Library</div>
               <p className={styles.moduleText}>
-                Server-side paginated explorer with multi-select comparison, search by name/SMILES, and numerical filter sliders.
+                Search by name or structure, filter by properties, and open any molecule&apos;s detail page.
               </p>
               <span className={styles.cardCta} aria-hidden="true">Open library →</span>
             </Link>
 
             <Link href="/compare" className={styles.moduleCard} aria-label="Open molecule comparison">
               <div className={styles.moduleIcon} aria-hidden="true">⚖️</div>
-              <div className={styles.moduleTitle}>FR-08: Molecule Comparison</div>
+              <div className={styles.moduleTitle}>Molecule Comparison</div>
               <p className={styles.moduleText}>
-                Side-by-side inspection of 2 to 4 molecules with 2D depictions, absolute delta calculations, and non-judgmental analysis.
+                Put 2 to 4 molecules side by side and see exactly how their properties differ.
               </p>
               <span className={styles.cardCta} aria-hidden="true">Open comparison →</span>
             </Link>
 
             <Link href="/analytics" className={styles.moduleCard} aria-label="Open property analytics">
               <div className={styles.moduleIcon} aria-hidden="true">📈</div>
-              <div className={styles.moduleTitle}>FR-09: Property Analytics</div>
+              <div className={styles.moduleTitle}>Property Analytics</div>
               <p className={styles.moduleText}>
-                Interactive distribution histograms (MW, LogP, TPSA, HBD, HBA) and LogP vs MW scatter plots driven by backend aggregations.
+                Charts showing how properties like weight and LogP are distributed across molecules.
               </p>
               <span className={styles.cardCta} aria-hidden="true">Open analytics →</span>
             </Link>
 
             <Link href="/import" className={styles.moduleCard} aria-label="Open CSV dataset import">
               <div className={styles.moduleIcon} aria-hidden="true">📥</div>
-              <div className={styles.moduleTitle}>FR-10: CSV Dataset Ingestion</div>
+              <div className={styles.moduleTitle}>Import Dataset</div>
               <p className={styles.moduleText}>
-                Batch structure ingestion with row-level error reporting, duplicate detection, and automated data-quality summaries.
+                Upload your own CSV of molecules. Invalid structures are flagged, never silently dropped.
               </p>
               <span className={styles.cardCta} aria-hidden="true">Open import →</span>
             </Link>
 
             <Link href="/export" className={styles.moduleCard} aria-label="Open reproducible export">
               <div className={styles.moduleIcon} aria-hidden="true">📤</div>
-              <div className={styles.moduleTitle}>FR-12: Reproducible Export</div>
+              <div className={styles.moduleTitle}>Export Results</div>
               <p className={styles.moduleText}>
-                Filtered dataset CSV export bundled with analysis parameters, RDKit version, calculation timestamp, and provenance metadata.
+                Download filtered molecules as CSV, bundled with the methods behind every number.
               </p>
               <span className={styles.cardCta} aria-hidden="true">Open export →</span>
             </Link>

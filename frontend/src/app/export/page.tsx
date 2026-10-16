@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { api, describeError, type Dataset } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
@@ -60,18 +60,26 @@ export default function ExportPage() {
 
   useOnMountLoad(load);
 
-  async function countMatching() {
-    try {
-      const params: Record<string, string | number | undefined> = { page: 1, page_size: 1 };
-      for (const [key, value] of Object.entries(filters)) {
-        if (value !== "") params[key] = value;
-      }
-      const response = await api.molecules(params);
-      setPreviewCount(response.total);
-    } catch (err) {
-      setError(describeError(err, "Unable to count matching records."));
-    }
-  }
+  // Live record count: updates automatically a moment after any filter changes,
+  // so there is a single action on this page — downloading the CSV.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      void (async () => {
+        try {
+          const params: Record<string, string | number | undefined> = { page: 1, page_size: 1 };
+          for (const [key, value] of Object.entries(filters)) {
+            if (value !== "") params[key] = value;
+          }
+          const response = await api.molecules(params);
+          setPreviewCount(response.total);
+          setError(null);
+        } catch (err) {
+          setError(describeError(err, "Unable to count matching records."));
+        }
+      })();
+    }, 350);
+    return () => clearTimeout(timer);
+  }, [filters]);
 
   async function download() {
     setBusy(true);
@@ -128,7 +136,8 @@ export default function ExportPage() {
                   onSearch={(term) => setFilters({ ...filters, q: term })}
                 />
                 <p className={styles.hint} style={{ marginTop: "0.5rem" }}>
-                  Choosing a suggestion fills the search term; press Enter to apply it to the export.
+                  Choosing a suggestion or pressing Enter sets the search term; the record count
+                  below updates automatically.
                 </p>
               </div>
               <div className={styles.field}>
@@ -208,9 +217,6 @@ export default function ExportPage() {
               </div>
             </div>
             <div className={styles.buttonRow}>
-              <button className={styles.secondaryButton} onClick={() => void countMatching()}>
-                Count matching records
-              </button>
               <button className={styles.button} onClick={() => void download()} disabled={busy}>
                 {busy ? "Preparing CSV…" : "Download filtered CSV"}
               </button>
@@ -225,11 +231,11 @@ export default function ExportPage() {
                 Clear filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
               </button>
             </div>
-            {previewCount !== null && (
-              <p className={styles.hint} role="status" style={{ marginTop: "0.75rem" }}>
-                {previewCount} record(s) match the current filters.
-              </p>
-            )}
+            <p className={styles.hint} role="status" style={{ marginTop: "0.75rem" }}>
+              {previewCount === null
+                ? "Counting matching records…"
+                : `${previewCount} record(s) will be included in the download.`}
+            </p>
           </div>
         </section>
 

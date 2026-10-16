@@ -16,7 +16,6 @@ import styles from "../subpage.module.css";
 function CompareWorkspace() {
   const searchParams = useSearchParams();
   const [selected, setSelected] = useState<MoleculeDetail[]>([]);
-  const [suggestions, setSuggestions] = useState<Molecule[]>([]);
   const [result, setResult] = useState<CompareResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,16 +37,6 @@ function CompareWorkspace() {
   }, [searchParams]);
 
   useOnMountLoad(loadFromQuery);
-
-  async function searchByName(term: string) {
-    try {
-      const response = await api.molecules({ q: term, page_size: 8 });
-      setSuggestions(response.items);
-      setError(null);
-    } catch (err) {
-      setError(describeError(err, "Search failed."));
-    }
-  }
 
   async function addMolecule(molecule: Molecule | MoleculeDetail | { id: number; display_name: string }) {
     setResult(null);
@@ -101,52 +90,21 @@ function CompareWorkspace() {
             <SearchBox
               id="compare-search"
               label="Search by name, SMILES, or external ID"
-              placeholder="e.g. caffe — start typing for suggestions"
+              placeholder="e.g. caffe — start typing, then pick a suggestion to add it"
               submitLabel="Find molecules"
-              onSearch={(term) => void searchByName(term)}
+              onSearch={() => {
+                setError("Pick a suggestion from the dropdown to add a molecule.");
+              }}
               onSelect={(molecule) => {
-                setSuggestions([]);
                 void addMolecule(molecule);
               }}
               isSelected={(id) => selected.some((item) => item.id === id)}
             />
             <p className={styles.hint} style={{ marginTop: "0.75rem" }}>
-              Pick a suggestion to add it instantly, or press Enter to list full matches below the
-              search field.
+              Start typing and pick a suggestion to add it instantly. Add at least two molecules,
+              then compare them below.
             </p>
           </div>
-
-          {suggestions.length > 0 && (
-            <div className={styles.card} style={{ marginTop: "1rem" }}>
-              <h3 className={styles.sectionTitle} style={{ fontSize: "1rem" }}>
-                Full matches ({suggestions.length})
-              </h3>
-              <ul className={styles.suggestions} aria-label="Search suggestions">
-                {suggestions.map((molecule) => (
-                  <li key={molecule.id}>
-                    <button
-                      className={styles.suggestion}
-                      onClick={() => void addMolecule(molecule)}
-                      disabled={
-                        selected.some((item) => item.id === molecule.id) || selected.length >= 4
-                      }
-                    >
-                      <span>
-                        <strong>{molecule.display_name}</strong>{" "}
-                        <span className={styles.hint}>
-                          MW {formatValue(molecule.molecular_weight)} ·{" "}
-                          {molecule.formula || "no formula"}
-                        </span>
-                      </span>
-                      <span aria-hidden="true">
-                        {selected.some((item) => item.id === molecule.id) ? "added" : "add +"}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </section>
 
         <section className={styles.section} aria-label="Selected molecules">
