@@ -157,9 +157,11 @@ Base URL `http://127.0.0.1:8000/api`. Interactive docs: `/docs` and `/redoc`.
 | POST | `/datasets/import/preview` | Validate a CSV upload and return a quality report (nothing saved) |
 | POST | `/datasets/import` | Confirm a reviewed import |
 | GET | `/imports/{job_id}` | Import job status |
+| GET | `/imports/recent` | Most recent import job (null when none yet) |
 | POST | `/compare` | Compare 2–4 molecules with differences |
 | GET | `/analytics/distribution` | Histogram data for one descriptor |
 | GET | `/analytics/scatter` | Scatter data for two descriptors |
+| GET | `/analytics/summary` | Reference statistics (min/max/mean/median) for every descriptor |
 | GET | `/export.csv` | Filtered CSV export |
 | GET | `/export/meta` | Export provenance summary |
 

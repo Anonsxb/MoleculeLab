@@ -129,10 +129,12 @@ export default function ExportPage() {
             <div className={styles.fieldRow}>
               <div className={styles.field}>
                 <SearchBox
+                  key={filters.q}
                   id="export-q"
                   label="Search term"
                   placeholder="e.g. caffe — start typing for suggestions"
                   submitLabel="Apply"
+                  initialValue={filters.q}
                   onSearch={(term) => setFilters({ ...filters, q: term })}
                 />
                 <p className={styles.hint} style={{ marginTop: "0.5rem" }}>

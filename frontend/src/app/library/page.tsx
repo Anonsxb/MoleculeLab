@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { api, DESCRIPTOR_META, describeError, formatValue, type Dataset, type Molecule } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
 import SearchBox from "../components/SearchBox";
@@ -50,15 +51,33 @@ const EMPTY_FILTERS: FilterState = {
   tpsa_max: "",
 };
 
-export default function LibraryPage() {
+function LibraryWorkspace() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [datasets, setDatasets] = useState<Dataset[]>([]);
-  const [datasetFilter, setDatasetFilter] = useState<string>("");
-  const [query, setQuery] = useState("");
-  const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS);
+  // Library state lives in the URL: returning from a molecule detail page,
+  // refreshing, or sharing the link preserves the exact view (PRD FR-03).
+  const [datasetFilter, setDatasetFilter] = useState<string>(() => searchParams.get("dataset_id") || "");
+  const [query, setQuery] = useState(() => searchParams.get("q") || "");
+  const [filters, setFilters] = useState<FilterState>(() => {
+    const initial = { ...EMPTY_FILTERS };
+    for (const key of Object.keys(EMPTY_FILTERS) as (keyof FilterState)[]) {
+      const value = searchParams.get(key);
+      if (value !== null) initial[key] = value;
+    }
+    return initial;
+  });
   const [ranges, setRanges] = useState<Record<string, { min: number | null; max: number | null }>>({});
-  const [sortBy, setSortBy] = useState("name");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [page, setPage] = useState(1);
+  const [sortBy, setSortBy] = useState(() => searchParams.get("sort_by") || "name");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(() =>
+    searchParams.get("sort_order") === "desc" ? "desc" : "asc",
+  );
+  const [page, setPage] = useState(() => {
+    const parsed = Number(searchParams.get("page"));
+    return Number.isFinite(parsed) && parsed >= 1 ? Math.floor(parsed) : 1;
+  });
   const [result, setResult] = useState<{ items: Molecule[]; total: number; pages: number } | null>(
     null,
   );
@@ -108,6 +127,23 @@ export default function LibraryPage() {
 
   useOnMountLoad(load);
 
+  // Mirror view state into the URL so back-navigation, refresh, and shared
+  // links reproduce the same results. Only replaces when different (no loops).
+  useEffect(() => {
+    const next = new URLSearchParams();
+    if (query) next.set("q", query);
+    if (datasetFilter) next.set("dataset_id", datasetFilter);
+    if (page !== 1) next.set("page", String(page));
+    if (sortBy !== "name") next.set("sort_by", sortBy);
+    if (sortOrder !== "asc") next.set("sort_order", sortOrder);
+    for (const [key, value] of Object.entries(filters)) {
+      if (value !== "") next.set(key, value);
+    }
+    if (next.toString() !== searchParams.toString()) {
+      router.replace(`${pathname}?${next.toString()}`, { scroll: false });
+    }
+  }, [datasetFilter, filters, page, pathname, query, router, searchParams, sortBy, sortOrder]);
+
   function updateFilter(key: keyof FilterState, value: string) {
     setPage(1);
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -147,10 +183,12 @@ export default function LibraryPage() {
           <h2 className={styles.sectionTitle}>Search</h2>
           <div className={styles.card}>
             <SearchBox
+              key={query}
               id="library-search"
               label="Name, SMILES, or external ID"
               placeholder="e.g. caffe — start typing for suggestions"
               submitLabel="Search"
+              initialValue={query}
               onSearch={(term) => {
                 setPage(1);
                 setQuery(term);
@@ -419,5 +457,13 @@ export default function LibraryPage() {
         </section>
       </main>
     </div>
+  );
+}
+
+export default function LibraryPage() {
+  return (
+    <Suspense fallback={null}>
+      <LibraryWorkspace />
+    </Suspense>
   );
 }

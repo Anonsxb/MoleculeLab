@@ -267,6 +267,20 @@ export const api = {
       total_valid_entries: number;
       total_invalid_entries: number;
     }>("/datasets"),
+  recentImport: () =>
+    request<{
+      job: {
+        id: number;
+        filename: string;
+        status: string;
+        dataset_id: number | null;
+        rows_read: number;
+        rows_accepted: number;
+        rows_rejected: number;
+        duplicates: number;
+        created_at: string;
+      } | null;
+    }>("/imports/recent"),
   dataset: (id: number) => request<Dataset>(`/datasets/${id}`),
 
   molecules: (params: Record<string, string | number | undefined>) => {

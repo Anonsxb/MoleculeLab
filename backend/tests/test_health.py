@@ -51,8 +51,10 @@ def test_valid_ethanol():
     assert result["canonical_smiles"] == "CCO"
     assert result["formula"] == "C2H6O"
     assert result["descriptors"]["molecular_weight"] == pytest.approx(46.069, abs=0.01)
+    assert result["descriptors"]["logp"] == pytest.approx(-0.0014, abs=0.01)
     assert result["descriptors"]["hbd"] == 1
     assert result["descriptors"]["hba"] == 1
+    assert result["descriptors"]["tpsa"] == pytest.approx(20.23, abs=0.01)
     assert result["structure_svg"] is not None
     assert "<svg" in result["structure_svg"]
 
@@ -61,6 +63,8 @@ def test_valid_caffeine():
     result = chemistry.describe_molecule("CN1C=NC2=C1C(=O)N(C(=O)N2C)C")
     assert result["valid"] is True
     assert result["formula"] == "C8H10N4O2"
+    assert result["descriptors"]["logp"] == pytest.approx(-1.0293, abs=0.01)
+    assert result["descriptors"]["tpsa"] == pytest.approx(61.82, abs=0.01)
     assert result["descriptors"]["hbd"] == 0
     # RDKit's Lipinski.NumHAcceptors reports 3 acceptors for caffeine.
     assert result["descriptors"]["hba"] == 3

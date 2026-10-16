@@ -484,6 +484,13 @@
   margin-top: 0.85rem;
 }
 
+.code {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: #7dd3fc;
+  overflow-wrap: anywhere;
+}
+
 .codeBlock {
   background: rgba(0, 0, 0, 0.45);
   border: 1px solid var(--border-subtle);

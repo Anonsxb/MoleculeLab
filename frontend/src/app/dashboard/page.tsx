@@ -7,6 +7,18 @@ import { useOnMountLoad } from "../../lib/hooks";
 import { BackLink, EmptyBlock, ErrorBlock, LoadingBlock, Notice } from "../components/states";
 import styles from "../subpage.module.css";
 
+interface ImportJob {
+  id: number;
+  filename: string;
+  status: string;
+  dataset_id: number | null;
+  rows_read: number;
+  rows_accepted: number;
+  rows_rejected: number;
+  duplicates: number;
+  created_at: string;
+}
+
 interface DashboardData {
   health: { status: string; app_name: string; version: string; rdkit_version: string } | null;
   datasets: Dataset[];
@@ -16,6 +28,7 @@ interface DashboardData {
     total_valid_entries: number;
     total_invalid_entries: number;
   };
+  recentImport: ImportJob | null;
 }
 
 export default function DashboardPage() {
@@ -23,6 +36,7 @@ export default function DashboardPage() {
     health: null,
     datasets: [],
     totals: { total_unique_molecules: 0, total_entries: 0, total_valid_entries: 0, total_invalid_entries: 0 },
+    recentImport: null,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,11 +45,12 @@ export default function DashboardPage() {
     setLoading(true);
     setError(null);
     try {
-      const [health, datasetResponse] = await Promise.all([
+      const [health, datasetResponse, recentResponse] = await Promise.all([
         api.health(),
         api.datasets(),
+        api.recentImport().catch(() => ({ job: null })),
       ]);
-      setData({ health, datasets: datasetResponse.items, totals: datasetResponse });
+      setData({ health, datasets: datasetResponse.items, totals: datasetResponse, recentImport: recentResponse.job });
     } catch (err) {
       setError(
         err instanceof Error
@@ -49,7 +64,7 @@ export default function DashboardPage() {
 
   useOnMountLoad(load);
 
-  const { health, datasets, totals } = data;
+  const { health, datasets, totals, recentImport } = data;
 
   return (
     <div className={styles.container}>
@@ -166,6 +181,57 @@ export default function DashboardPage() {
                     </p>
                   </div>
                 ))
+              )}
+            </section>
+
+            <section className={styles.section} aria-label="Latest import">
+              <h2 className={styles.sectionTitle}>Latest import</h2>
+              {recentImport ? (
+                <div className={styles.card}>
+                  <div className={styles.specsGrid}>
+                    <div className={styles.specItem}>
+                      <div className={styles.specLabel}>File</div>
+                      <div className={styles.specValue}>{recentImport.filename}</div>
+                    </div>
+                    <div className={styles.specItem}>
+                      <div className={styles.specLabel}>Status</div>
+                      <div className={styles.specValue}>{recentImport.status}</div>
+                    </div>
+                    <div className={styles.specItem}>
+                      <div className={styles.specLabel}>Accepted / rejected</div>
+                      <div className={styles.specValue}>
+                        {recentImport.rows_accepted} / {recentImport.rows_rejected}
+                      </div>
+                    </div>
+                    <div className={styles.specItem}>
+                      <div className={styles.specLabel}>Duplicates kept out</div>
+                      <div className={styles.specValue}>{recentImport.duplicates}</div>
+                    </div>
+                    <div className={styles.specItem}>
+                      <div className={styles.specLabel}>Ran</div>
+                      <div className={styles.specValue}>
+                        {new Date(recentImport.created_at).toLocaleString()}
+                      </div>
+                    </div>
+                    <div className={styles.specItem}>
+                      <div className={styles.specLabel}>Dataset</div>
+                      <div className={styles.specValue}>
+                        {recentImport.dataset_id ? (
+                          <Link href={`/library?dataset_id=${recentImport.dataset_id}`} className={styles.inlineLink}>
+                            Open dataset →
+                          </Link>
+                        ) : (
+                          "—"
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <EmptyBlock title="No imports yet.">
+                  Upload a CSV on the <Link href="/import" className={styles.inlineLink}>import page</Link> and
+                  its result will be summarized here.
+                </EmptyBlock>
               )}
             </section>
 

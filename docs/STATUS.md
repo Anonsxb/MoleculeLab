@@ -15,9 +15,9 @@ re-investigation. Update it whenever you finish a block of work.
 | Backend API | Running on `http://127.0.0.1:8000` | `/api/health` returns `{"status":"healthy","rdkit_version":"2026.09.1"}` |
 | Frontend | Running on `http://127.0.0.1:3000` | `npm run build` succeeds, all routes prerender |
 | Database | `backend/moleculelab.db` (SQLite) seeded | 1,338 real molecules across 2 datasets |
-| Tests | **45 passed** (`cd backend && pytest tests`) | chemistry, API, import, analytics, export |
+| Tests | **48 passed** (`cd backend && pytest tests`) | chemistry, API, import, analytics, export |
 | Lint | Clean (`cd frontend && npm run lint`) | 0 errors, 0 warnings |
-| Build | Clean (`cd frontend && npm run build`) | 9 routes: `/`, `/dashboard`, `/library`, `/compare`, `/analytics`, `/import`, `/export`, `/docs`, `/molecules/[id]` |
+| Build | Clean (`cd frontend && npm run build`) | 11 routes: `/`, `/dashboard`, `/library`, `/validate`, `/compare`, `/analytics`, `/import`, `/export`, `/docs`, `/developers`, `/molecules/[id]` |
 | Migrations | `cd backend && alembic upgrade head` | creates 4 tables + indexes |
 
 ### Implemented against the PRD

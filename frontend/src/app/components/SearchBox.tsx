@@ -25,6 +25,8 @@ interface SearchBoxProps {
   submitLabel?: string;
   autoFocus?: boolean;
   maxSuggestions?: number;
+  /** Pre-fills the field (e.g. when restoring state from the URL). */
+  initialValue?: string;
 }
 
 const DEBOUNCE_MS = 180;
@@ -39,8 +41,9 @@ export default function SearchBox({
   submitLabel = "Search",
   autoFocus = false,
   maxSuggestions = 8,
+  initialValue = "",
 }: SearchBoxProps) {
-  const [term, setTerm] = useState("");
+  const [term, setTerm] = useState(initialValue);
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const [hidden, setHidden] = useState(false);
   const [loading, setLoading] = useState(false);

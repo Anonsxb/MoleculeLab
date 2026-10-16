@@ -56,6 +56,19 @@ def confirm_import(
     )
 
 
+@router.get("/imports/recent")
+def get_recent_import(db: Session = Depends(get_db)) -> dict:
+    """Return the most recent import job, or null when no import has run yet."""
+    from sqlalchemy import desc, select
+
+    from app.models.import_job import ImportJob
+
+    job = db.execute(select(ImportJob).order_by(desc(ImportJob.id)).limit(1)).scalars().first()
+    if job is None:
+        return {"job": None}
+    return {"job": _job_payload(job)}
+
+
 @router.get("/imports/{job_id}")
 def get_import_job(job_id: int, db: Session = Depends(get_db)) -> dict:
     """Return the status and quality information of an import job."""
@@ -73,6 +86,11 @@ def get_import_job(job_id: int, db: Session = Depends(get_db)) -> dict:
                 }
             },
         )
+    return _job_payload(job)
+
+
+def _job_payload(job) -> dict:
+    """Map an ImportJob row to its API representation."""
     return {
         "id": job.id,
         "filename": job.filename,

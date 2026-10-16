@@ -103,7 +103,7 @@ export default function Home() {
               Explore molecules. <span className={styles.accentText}>Understand their properties.</span>
             </h1>
             <p className={styles.heroDescription}>
-              Search 180+ real molecules, see their structures, compare calculated properties
+              Search 1,300+ real molecules, see their structures, compare calculated properties
               side by side, and learn what descriptors like LogP and TPSA actually mean —
               all computed transparently with open chemistry methods.
             </p>

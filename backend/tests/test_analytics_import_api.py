@@ -32,6 +32,22 @@ def test_preview_reports_quality():
     assert preview.rejected[0].row_number == 7
 
 
+def test_sample_dataset_import_counts():
+    """The bundled sample CSV must import with documented counts (AC-02)."""
+    from pathlib import Path
+
+    sample = Path(__file__).resolve().parents[1] / "data" / "samples" / "sample_import.csv"
+    preview = import_service.analyze_import(
+        sample.read_text(encoding="utf-8"), "sample_import.csv", "Sample", ""
+    )
+    assert preview.quality.total_rows_read == 10
+    assert preview.quality.accepted_rows == 5
+    assert preview.quality.rejected_rows == 3
+    assert preview.quality.invalid_structures == 2
+    assert preview.quality.missing_required_fields == 1
+    assert preview.quality.duplicate_records == 2
+
+
 def test_duplicate_detection_distinguishes_kinds():
     preview = import_service.analyze_import(CSV_CONTENT, "test.csv", "Preview", "")
     reasons = {d.reason for d in preview.duplicates}
@@ -97,6 +113,51 @@ def test_distribution_rejects_unknown_descriptor():
     assert response.json()["error"]["code"] == "UNSUPPORTED_DESCRIPTOR"
 
 
+def test_distribution_handles_empty_dataset():
+    """Charts must handle empty datasets instead of failing (AC-08)."""
+    from pathlib import Path
+
+    from app.services import dataset_service
+
+    db = next(_session())
+    dataset = dataset_service.create_dataset(
+        db,
+        name="AC-08 Empty Dataset",
+        description="Dataset with no molecules for empty-state testing.",
+        source_name="pytest",
+    )
+    db.commit()
+    try:
+        result = client.get(
+            "/api/analytics/distribution",
+            params={"descriptor": "molecular_weight", "dataset_id": dataset.id},
+        ).json()
+        assert result["record_count"] == 0
+        assert result["included_count"] == 0
+        assert result["bins"] == []
+        assert result["min"] is None
+        scatter = client.get(
+            "/api/analytics/scatter",
+            params={"x": "molecular_weight", "y": "logp", "dataset_id": dataset.id},
+        ).json()
+        assert scatter["included_count"] == 0
+        assert scatter["points"] == []
+    finally:
+        db.delete(dataset)
+        db.commit()
+
+
+def _session():
+    from app.core.database import SessionLocal
+
+    session = SessionLocal()
+    try:
+        yield session
+    finally:
+        session.rollback()
+        session.close()
+
+
 def test_summary_endpoint_reports_reference_values():
     result = client.get("/api/analytics/summary").json()
     assert result["record_count"] > 0
@@ -144,3 +205,44 @@ def test_import_job_status_endpoint():
     response = client.get("/api/imports/99999")
     assert response.status_code == 404
     assert response.json()["error"]["code"] == "IMPORT_JOB_NOT_FOUND"
+
+
+def test_recent_import_endpoint_reports_latest_job():
+    """The dashboard's latest-import card needs the newest job (FR-01)."""
+    from app.models.import_job import ImportJob
+
+    db = next(_session())
+    job = ImportJob(
+        filename="recent_test.csv",
+        status="completed",
+        rows_read=4,
+        rows_accepted=3,
+        rows_rejected=1,
+        invalid_structures=1,
+        missing_fields=0,
+        duplicates=0,
+        calculation_failures=0,
+        error_summary="",
+    )
+    db.add(job)
+    db.commit()
+    try:
+        result = client.get("/api/imports/recent").json()
+        assert result["job"] is not None
+        assert result["job"]["filename"] == "recent_test.csv"
+        assert result["job"]["rows_accepted"] == 3
+        assert result["job"]["rows_rejected"] == 1
+    finally:
+        db.delete(job)
+        db.commit()
+
+
+def _session():
+    from app.core.database import SessionLocal
+
+    session = SessionLocal()
+    try:
+        yield session
+    finally:
+        session.rollback()
+        session.close()
