@@ -1,0 +1,31 @@
+# Render blueprint for the MoleculeLab backend (FastAPI + RDKit).
+#
+# Usage: push this repository to GitHub, then in Render choose
+# "New +" -> "Blueprint" and point it at this file.
+# After the API is live, set ALLOWED_ORIGINS to include your Vercel URL
+# (see docs/DEPLOYMENT.md) and redeploy.
+
+services:
+  - type: web
+    name: moleculelab-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    # Run migrations before (re)starting so the schema always matches the code.
+    preDeployCommand: python -m alembic upgrade head
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: false
+      # SQLite keeps the free tier simple. The app re-seeds its bundled
+      # datasets automatically on startup, so ephemeral disks are fine for a
+      # demo. For persistent user imports, attach a Render Postgres database
+      # and override DATABASE_URL instead.
+      - key: DATABASE_URL
+        value: sqlite:///./moleculelab.db
+      # IMPORTANT: replace with your real frontend origin(s), comma-separated.
+      - key: ALLOWED_ORIGINS
+        value: https://moleculelab.vercel.app

@@ -148,7 +148,8 @@ export default function Home() {
                 <div className={styles.errorHeader}>Connection Warning</div>
                 <div className={styles.errorBody}>{error}</div>
                 <div className={styles.errorHint}>
-                  Ensure the FastAPI backend is running on <code>http://localhost:8000</code>.
+                  Ensure the backend is reachable at <code>{apiUrl}</code> and that it allows
+                  this site in its <code>ALLOWED_ORIGINS</code> setting.
                 </div>
               </div>
             )}

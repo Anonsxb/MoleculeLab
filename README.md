@@ -1,9 +1,40 @@
 # MoleculeLab 🧪
 
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-square&logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.143-009688?style=flat-square&logo=fastapi)
+![RDKit](https://img.shields.io/badge/RDKit-2026.9.1-lightgrey?style=flat-square)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)
+![Tests](https://img.shields.io/badge/pytest-48%20passing-brightgreen?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+
 **Molecular Structure & Property Exploration Platform**
-*Educational computational chemistry application — MVP 1.0*
+*Educational computational chemistry application — explore 1,338 real molecules in your browser.*
+
+> 🚀 **Live demo:** _(paste your Vercel URL here after deploying — see `docs/DEPLOYMENT.md`)_
 
 ---
+
+## 📸 Screenshots
+
+<!--
+  Screenshots live in docs/screenshots/ (see docs/GITHUB.md for the capture list).
+  After adding the six PNGs, delete these comment markers to show the gallery.
+  File names: 01-home.png 02-library.png 03-molecule.png 04-compare.png 05-analytics.png 06-validate.png
+
+<p align="center">
+  <img src="docs/screenshots/01-home.png" width="720" alt="MoleculeLab home page with guided tour and live backend status" />
+  <br />
+  <img src="docs/screenshots/02-library.png" width="350" alt="Molecular library with search, filters, and results" />
+  <img src="docs/screenshots/03-molecule.png" width="350" alt="Caffeine detail page with 2D structure and descriptors" />
+  <br />
+  <img src="docs/screenshots/04-compare.png" width="350" alt="Side-by-side comparison of three molecules" />
+  <img src="docs/screenshots/05-analytics.png" width="350" alt="Property distribution charts" />
+  <br />
+  <img src="docs/screenshots/06-validate.png" width="720" alt="SMILES checker validating caffeine" />
+</p>
+-->
 
 ## 🔬 What this is
 
