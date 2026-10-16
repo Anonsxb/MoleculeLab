@@ -26,7 +26,7 @@ function CompareWorkspace() {
       .map((value) => Number(value))
       .filter((value) => Number.isFinite(value) && value > 0)
       .slice(0, 4);
-    if (ids.length < 2) return;
+    if (ids.length < 1) return;
     try {
       const loaded: MoleculeDetail[] = [];
       for (const id of ids) loaded.push(await api.molecule(id));

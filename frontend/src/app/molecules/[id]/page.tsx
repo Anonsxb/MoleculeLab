@@ -14,7 +14,20 @@ function CopyButton({ text, label }: { text: string; label: string }) {
 
   async function handleCopy() {
     try {
-      await navigator.clipboard.writeText(text);
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        // Fallback for older browsers: hidden textarea + execCommand.
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.setAttribute("readonly", "");
+        area.style.position = "absolute";
+        area.style.left = "-9999px";
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+      }
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     } catch {
