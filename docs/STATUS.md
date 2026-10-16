@@ -14,8 +14,8 @@ re-investigation. Update it whenever you finish a block of work.
 |---|---|---|
 | Backend API | Running on `http://127.0.0.1:8000` | `/api/health` returns `{"status":"healthy","rdkit_version":"2026.09.1"}` |
 | Frontend | Running on `http://127.0.0.1:3000` | `npm run build` succeeds, all routes prerender |
-| Database | `backend/moleculelab.db` (SQLite) seeded | 181 real molecules, dataset `Educational Common Compounds Extract` |
-| Tests | **41 passed** (`cd backend && pytest tests`) | chemistry, API, import, analytics, export |
+| Database | `backend/moleculelab.db` (SQLite) seeded | 1,338 real molecules across 2 datasets |
+| Tests | **45 passed** (`cd backend && pytest tests`) | chemistry, API, import, analytics, export |
 | Lint | Clean (`cd frontend && npm run lint`) | 0 errors, 0 warnings |
 | Build | Clean (`cd frontend && npm run build`) | 9 routes: `/`, `/dashboard`, `/library`, `/compare`, `/analytics`, `/import`, `/export`, `/docs`, `/molecules/[id]` |
 | Migrations | `cd backend && alembic upgrade head` | creates 4 tables + indexes |
@@ -38,7 +38,10 @@ re-investigation. Update it whenever you finish a block of work.
 ### Known good sample data
 - `backend/data/samples/sample_import.csv` → 10 rows read, 5 accepted,
   3 rejected (2 invalid structure, 1 missing smiles), 2 duplicates.
-- Seed source: `backend/data/datasets/pubchem_educational.json` (183 PubChem records).
+- Bundled extracts (reproducible via `backend/scripts/fetch_pubchem.py` and
+  `backend/scripts/fetch_chembl.py`):
+  - `backend/data/datasets/pubchem_educational.json` (183 PubChem records → 181 molecules)
+  - `backend/data/datasets/chembl_approved.json` (1,200 ChEMBL approved drugs → 1,157 molecules)
 
 ---
 

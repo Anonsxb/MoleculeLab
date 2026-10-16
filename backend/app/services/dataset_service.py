@@ -9,19 +9,40 @@ from app.models.dataset_entry import DatasetEntry
 from app.models.molecule import Molecule
 from app.schemas.chemistry import DatasetSummary
 
-SEED_FILE = "data/datasets/pubchem_educational.json"
+SEED_DATASETS = [
+    {
+        "file": "data/datasets/pubchem_educational.json",
+        "name": "Educational Common Compounds Extract",
+        "description": (
+            "A curated extract of common compounds used in chemistry education. Structures are "
+            "immutable public reference records from PubChem (NIH); descriptors are computed "
+            "locally by MoleculeLab's RDKit engine and are not experimental measurements."
+        ),
+        "source_name": "PubChem, National Institutes of Health",
+        "source_url": "https://pubchem.ncbi.nlm.nih.gov/",
+        "version_label": "1.0",
+        "id_field": "cid",
+        "id_prefix": "CID",
+    },
+    {
+        "file": "data/datasets/chembl_approved.json",
+        "name": "Approved Drugs Extract (ChEMBL)",
+        "description": (
+            "Approved small-molecule drugs with preferred names from ChEMBL (EMBL-EBI). "
+            "Structures are immutable public reference records; descriptors are computed "
+            "locally by MoleculeLab's RDKit engine and are not experimental measurements."
+        ),
+        "source_name": "ChEMBL, EMBL European Bioinformatics Institute",
+        "source_url": "https://www.ebi.ac.uk/chembl/",
+        "version_label": "web services, October 2026",
+        "id_field": "chembl_id",
+        "id_prefix": "",
+    },
+]
 
-SEED_SOURCE = {
-    "name": "Educational Common Compounds Extract",
-    "description": (
-        "A curated extract of common compounds used in chemistry education. Structures are "
-        "immutable public reference records from PubChem (NIH); descriptors are computed "
-        "locally by MoleculeLab's RDKit engine and are not experimental measurements."
-    ),
-    "source_name": "PubChem, National Institutes of Health",
-    "source_url": "https://pubchem.ncbi.nlm.nih.gov/",
-    "version_label": "1.0",
-}
+# Backwards-compatible alias for the original single-dataset constant.
+SEED_FILE = SEED_DATASETS[0]["file"]
+SEED_SOURCE = {k: SEED_DATASETS[0][k] for k in ("name", "description", "source_name", "source_url", "version_label")}
 
 
 def create_dataset(

@@ -108,22 +108,37 @@ never read a descriptor as a drug-liability score.
 
 ---
 
-## 📚 Dataset & provenance
+## 📚 Datasets & provenance
 
-**Educational Common Compounds Extract** — 181 curated common compounds used in
-chemistry teaching.
+Two bundled datasets ship with the application (1,338 distinct molecules total).
+Dataset comprehension features — dashboard metrics, library and analytics dataset
+selectors, per-dataset analytics — all read from this same live data.
+
+### 1. Educational Common Compounds Extract — 181 curated common compounds
 
 - **Source:** PubChem, National Institutes of Health — <https://pubchem.ncbi.nlm.nih.gov/>
 - **Provenance:** each record stores its PubChem CID as `external_id` and a link back
   to the compound page.
-- **Calculation:** descriptors are computed locally by RDKit; no external descriptor
-  values are imported.
 - **Reproducing the extract:** `python backend/scripts/fetch_pubchem.py` re-downloads
   the public reference records into `backend/data/datasets/pubchem_educational.json`.
-  Duplicate structures are detected and reported, never silently dropped.
 
-Missing values, invalid structures, exact duplicate inputs, and identical canonical
-structures are four distinct states throughout the application.
+### 2. Approved Drugs Extract (ChEMBL) — 1,157 approved small-molecule drugs
+
+- **Source:** ChEMBL, EMBL European Bioinformatics Institute — <https://www.ebi.ac.uk/chembl/>
+- **Provenance:** approved drugs (`max_phase = 4`) with preferred names; each record
+  stores its ChEMBL ID as `external_id` and a link to its ChEMBL report card.
+  Structures that already existed from the PubChem extract are linked, never duplicated.
+- **Reproducing the extract:** `python backend/scripts/fetch_chembl.py` re-downloads
+  the public reference records into `backend/data/datasets/chembl_approved.json`.
+  Please follow ChEMBL's licence and citation requirements when reusing the data.
+
+### Shared rules
+
+- **Calculation:** descriptors are computed locally by RDKit for every record; no
+  external descriptor values are imported.
+- **Missing values, invalid structures, exact duplicate inputs, and identical
+  canonical structures are four distinct states** throughout the application —
+  duplicates are reported, never silently dropped.
 
 ---
 
