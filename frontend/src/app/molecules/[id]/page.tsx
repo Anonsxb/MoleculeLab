@@ -54,6 +54,7 @@ function MoleculeDetailWorkspace() {
   const [resolvedId] = useState(() => Number(params?.id));
   const moleculeId = resolvedId;
   const [molecule, setMolecule] = useState<MoleculeDetail | null>(null);
+  const [reference, setReference] = useState<Record<string, { median: number | null; min: number | null; max: number | null }> | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,7 +62,22 @@ function MoleculeDetailWorkspace() {
     setLoading(true);
     setError(null);
     try {
-      setMolecule(await api.molecule(moleculeId));
+      const [detail, summary] = await Promise.all([
+        api.molecule(moleculeId),
+        api.summary().catch(() => null),
+      ]);
+      setMolecule(detail);
+      if (summary) {
+        const table: Record<string, { median: number | null; min: number | null; max: number | null }> = {};
+        for (const descriptor of summary.descriptors) {
+          table[descriptor.key] = {
+            median: descriptor.median,
+            min: descriptor.min,
+            max: descriptor.max,
+          };
+        }
+        setReference(table);
+      }
     } catch (err) {
       setError(describeError(err, "Unable to load this molecule."));
     } finally {
@@ -124,6 +140,7 @@ function MoleculeDetailWorkspace() {
                     <tr>
                       <th scope="col">Descriptor</th>
                       <th scope="col">Value</th>
+                      <th scope="col">Typical (median)</th>
                       <th scope="col">Unit</th>
                       <th scope="col">Method</th>
                     </tr>
@@ -131,10 +148,16 @@ function MoleculeDetailWorkspace() {
                   <tbody>
                     {DESCRIPTOR_ORDER.map((key) => {
                       const entry = molecule.descriptors?.[key];
+                      const ref = reference?.[key];
                       return (
                         <tr key={key}>
                           <td>{key.replace("_", " ")}</td>
                           <td>{entry?.value === null || entry?.value === undefined ? "—" : formatValue(entry.value)}</td>
+                          <td>
+                            {ref?.median === null || ref?.median === undefined
+                              ? "—"
+                              : formatValue(ref.median)}
+                          </td>
                           <td>{entry?.unit || "—"}</td>
                           <td>
                             <code className={styles.code}>{entry?.method || "—"}</code>
@@ -145,6 +168,11 @@ function MoleculeDetailWorkspace() {
                   </tbody>
                 </table>
               </div>
+              <p className={styles.hint} style={{ marginTop: "0.75rem" }}>
+                “Typical (median)” is the middle value across all molecules in the database — a
+                reference point so you can tell at a glance whether this molecule is above or
+                below typical. It is a description of the dataset, not a judgment about the molecule.
+              </p>
               <p className={styles.hint} style={{ marginTop: "0.75rem" }}>
                 Calculated with RDKit {molecule.descriptor_provenance?.rdkit_version || "unknown"} on{" "}
                 {molecule.descriptor_provenance?.calculated_at

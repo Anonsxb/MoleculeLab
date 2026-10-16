@@ -174,6 +174,15 @@ function CompareWorkspace() {
           {!error && !result && !loading && <EmptyBlock title="No comparison run yet." />}
           {result && (
             <>
+              <div className={styles.notice} role="note" style={{ marginBottom: "1rem" }}>
+                <span aria-hidden="true">ℹ</span>
+                <span>
+                  How to read this: each row is one calculated property. The “Difference vs
+                  first” column measures how far each molecule sits from{" "}
+                  {result.molecules[0]?.display_name} — bigger numbers mean more different, not
+                  better or worse. A dash means that value could not be calculated.
+                </span>
+              </div>
               <div className={styles.tableWrap}>
                 <table className={styles.table}>
                   <caption className={styles.hint}>

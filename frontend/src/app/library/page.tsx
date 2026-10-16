@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api, DESCRIPTOR_META, describeError, type Dataset, type Molecule } from "../../lib/api";
+import { api, DESCRIPTOR_META, describeError, formatValue, type Dataset, type Molecule } from "../../lib/api";
 import { useOnMountLoad } from "../../lib/hooks";
 import SearchBox from "../components/SearchBox";
 import {
@@ -55,6 +55,7 @@ export default function LibraryPage() {
   const [datasetFilter, setDatasetFilter] = useState<string>("");
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS);
+  const [ranges, setRanges] = useState<Record<string, { min: number | null; max: number | null }>>({});
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [page, setPage] = useState(1);
@@ -68,6 +69,14 @@ export default function LibraryPage() {
 
   useEffect(() => {
     api.datasets().then((response) => setDatasets(response.items)).catch(() => setDatasets([]));
+    // Observed dataset ranges guide beginners toward sensible filter values.
+    api.summary().then((summary) => {
+      const table: Record<string, { min: number | null; max: number | null }> = {};
+      for (const descriptor of summary.descriptors) {
+        table[descriptor.key] = { min: descriptor.min, max: descriptor.max };
+      }
+      setRanges(table);
+    }).catch(() => setRanges({}));
   }, []);
 
   const load = useCallback(async () => {
@@ -195,38 +204,53 @@ export default function LibraryPage() {
 
         <section className={styles.section} aria-label="Numeric descriptor filters">
           <h2 className={styles.sectionTitle}>Descriptor filters</h2>
+          <p className={styles.hint} style={{ marginBottom: "1rem" }}>
+            Keep only molecules whose properties fall in a range you set. The observed range
+            under each descriptor shows what actually exists in the data —{" "}
+            <Link href="/docs" className={styles.inlineLink}>
+              what do these descriptors mean?
+            </Link>
+          </p>
           <div className={styles.card}>
             <div className={styles.fieldRow}>
-              {DESCRIPTORS.map((descriptor) => (
-                <div className={styles.field} key={descriptor}>
-                  <label htmlFor={`${filterKey(descriptor, "min")}`}>
-                    {DESCRIPTOR_META[descriptor].label} ({DESCRIPTOR_META[descriptor].unit})
-                  </label>
-                  <div style={{ display: "flex", gap: "0.4rem" }}>
-                    <input
-                      id={filterKey(descriptor, "min")}
-                      type="number"
-                      step="any"
-                      placeholder="min"
-                      value={filters[filterKey(descriptor, "min") as keyof FilterState]}
-                      onChange={(e) =>
-                        updateFilter(filterKey(descriptor, "min") as keyof FilterState, e.target.value)
-                      }
-                    />
-                    <input
-                      id={filterKey(descriptor, "max")}
-                      aria-label={`${DESCRIPTOR_META[descriptor].label} maximum`}
-                      type="number"
-                      step="any"
-                      placeholder="max"
-                      value={filters[filterKey(descriptor, "max") as keyof FilterState]}
-                      onChange={(e) =>
-                        updateFilter(filterKey(descriptor, "max") as keyof FilterState, e.target.value)
-                      }
-                    />
+              {DESCRIPTORS.map((descriptor) => {
+                const range = ranges[descriptor];
+                return (
+                  <div className={styles.field} key={descriptor}>
+                    <label htmlFor={filterKey(descriptor, "min")}>
+                      {DESCRIPTOR_META[descriptor].label} ({DESCRIPTOR_META[descriptor].unit})
+                    </label>
+                    <div style={{ display: "flex", gap: "0.4rem" }}>
+                      <input
+                        id={filterKey(descriptor, "min")}
+                        type="number"
+                        step="any"
+                        placeholder="min"
+                        value={filters[filterKey(descriptor, "min") as keyof FilterState]}
+                        onChange={(e) =>
+                          updateFilter(filterKey(descriptor, "min") as keyof FilterState, e.target.value)
+                        }
+                      />
+                      <input
+                        id={filterKey(descriptor, "max")}
+                        aria-label={`${DESCRIPTOR_META[descriptor].label} maximum`}
+                        type="number"
+                        step="any"
+                        placeholder="max"
+                        value={filters[filterKey(descriptor, "max") as keyof FilterState]}
+                        onChange={(e) =>
+                          updateFilter(filterKey(descriptor, "max") as keyof FilterState, e.target.value)
+                        }
+                      />
+                    </div>
+                    <span className={styles.hint}>
+                      {range && range.min !== null && range.max !== null
+                        ? `In the data: ${formatValue(range.min, 1)} – ${formatValue(range.max, 1)}`
+                        : "Observed range loading…"}
+                    </span>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

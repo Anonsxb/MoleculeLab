@@ -158,6 +158,33 @@ class ScatterResponse(BaseModel):
 
 
 # --------------------------------------------------------------------------- #
+# Summary (dataset-wide reference values for contextualising single molecules)
+# --------------------------------------------------------------------------- #
+
+class DescriptorSummary(BaseModel):
+    """Reference statistics for one descriptor across a dataset."""
+
+    key: str
+    label: str
+    unit: str
+    record_count: int
+    included_count: int
+    min: Optional[float]
+    max: Optional[float]
+    mean: Optional[float]
+    median: Optional[float]
+
+
+class SummaryResponse(BaseModel):
+    """Dataset-wide reference values for every supported descriptor."""
+
+    dataset_name: str
+    dataset_id: Optional[int]
+    record_count: int
+    descriptors: List[DescriptorSummary]
+
+
+# --------------------------------------------------------------------------- #
 # Export (FR-12)
 # --------------------------------------------------------------------------- #
 

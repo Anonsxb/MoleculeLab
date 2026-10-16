@@ -176,6 +176,41 @@ export default function Home() {
           </div>
         </section>
 
+        {/* First-visit guided path */}
+        <section className={styles.sectionContainer} aria-label="First visit guide">
+          <h2 className={styles.sectionTitle}>First time here? Do this</h2>
+          <p className={styles.sectionSubtitle}>
+            Three clicks that teach you the whole idea — no chemistry background needed.
+          </p>
+          <div className={styles.tourGrid}>
+            <Link href="/molecules/29" className={styles.moduleCard} aria-label="Step 1: open caffeine">
+              <div className={styles.tourNum} aria-hidden="true">1</div>
+              <div className={styles.moduleTitle}>Meet a molecule</div>
+              <p className={styles.moduleText}>
+                Open caffeine: see its structure, formula, and every calculated property explained.
+              </p>
+              <span className={styles.cardCta} aria-hidden="true">Open caffeine →</span>
+            </Link>
+            <Link href="/compare?ids=1,3" className={styles.moduleCard} aria-label="Step 2: compare water and ethanol">
+              <div className={styles.tourNum} aria-hidden="true">2</div>
+              <div className={styles.moduleTitle}>Spot the difference</div>
+              <p className={styles.moduleText}>
+                Compare water and ethanol side by side — two familiar molecules with clearly
+                different properties.
+              </p>
+              <span className={styles.cardCta} aria-hidden="true">Compare them →</span>
+            </Link>
+            <Link href="/validate" className={styles.moduleCard} aria-label="Step 3: check your own structure">
+              <div className={styles.tourNum} aria-hidden="true">3</div>
+              <div className={styles.moduleTitle}>Check your own</div>
+              <p className={styles.moduleText}>
+                Type any SMILES string (try CCO) and watch it validate, draw, and calculate live.
+              </p>
+              <span className={styles.cardCta} aria-hidden="true">Try it →</span>
+            </Link>
+          </div>
+        </section>
+
         {/* 5 Core Descriptors Matrix */}
         <section className={styles.sectionContainer}>
           <h2 className={styles.sectionTitle}>Standard Calculated Descriptors (Backend Engine)</h2>

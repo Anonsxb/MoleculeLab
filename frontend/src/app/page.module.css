@@ -516,6 +516,28 @@ a.moduleCard:focus-visible {
   color: var(--cyan-accent);
 }
 
+.tourGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  counter-reset: tour;
+}
+
+.tourNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid var(--border-accent);
+  color: var(--cyan-accent);
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
 .moduleIcon {
   font-size: 1.75rem;
   margin-bottom: 0.75rem;

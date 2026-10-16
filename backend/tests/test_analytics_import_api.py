@@ -97,6 +97,17 @@ def test_distribution_rejects_unknown_descriptor():
     assert response.json()["error"]["code"] == "UNSUPPORTED_DESCRIPTOR"
 
 
+def test_summary_endpoint_reports_reference_values():
+    result = client.get("/api/analytics/summary").json()
+    assert result["record_count"] > 0
+    assert len(result["descriptors"]) == 5
+    by_key = {d["key"]: d for d in result["descriptors"]}
+    assert by_key["molecular_weight"]["median"] is not None
+    assert by_key["molecular_weight"]["min"] <= by_key["molecular_weight"]["median"]
+    assert by_key["molecular_weight"]["median"] <= by_key["molecular_weight"]["max"]
+    assert by_key["logp"]["unit"] == "dimensionless"
+
+
 def test_scatter_endpoint():
     result = client.get(
         "/api/analytics/scatter", params={"x": "molecular_weight", "y": "logp"}

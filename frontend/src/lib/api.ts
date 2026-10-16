@@ -86,11 +86,30 @@ export interface Distribution {
   median: number | null;
 }
 
+export interface DescriptorSummary {
+  key: string;
+  label: string;
+  unit: string;
+  record_count: number;
+  included_count: number;
+  min: number | null;
+  max: number | null;
+  mean: number | null;
+  median: number | null;
+}
+
 export interface ScatterPoint {
   id: number;
   name: string;
   x: number;
   y: number;
+}
+
+export interface DatasetSummary {
+  dataset_name: string;
+  dataset_id?: number | null;
+  record_count: number;
+  descriptors: DescriptorSummary[];
 }
 
 export interface Scatter {
@@ -274,6 +293,10 @@ export const api = {
   distribution: (descriptor: string, datasetId?: number | null) =>
     request<Distribution>(
       `/analytics/distribution?descriptor=${encodeURIComponent(descriptor)}${datasetId ? `&dataset_id=${datasetId}` : ""}`,
+    ),
+  summary: (datasetId?: number | null) =>
+    request<DatasetSummary>(
+      `/analytics/summary${datasetId ? `?dataset_id=${datasetId}` : ""}`,
     ),
   scatter: (x: string, y: string, datasetId?: number | null) =>
     request<Scatter>(

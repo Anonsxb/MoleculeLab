@@ -9,7 +9,12 @@ from sqlalchemy.orm import Session
 
 from app.models.dataset_entry import DatasetEntry
 from app.models.molecule import Molecule
-from app.schemas.analysis import DistributionResponse, ScatterResponse
+from app.schemas.analysis import (
+    DescriptorSummary,
+    DistributionResponse,
+    ScatterResponse,
+    SummaryResponse,
+)
 from app.services import chemistry
 
 DESCRIPTOR_COLUMNS = {
@@ -117,6 +122,59 @@ def distribution(
         max=float(array.max()),
         mean=float(array.mean()),
         median=float(np.median(array)),
+    )
+
+
+def summary(db: Session, dataset_id: Optional[int] = None) -> SummaryResponse:
+    """Reference statistics for every descriptor across a dataset.
+
+    Used to contextualise a single molecule ("typical values") and to show
+    observed ranges next to filter inputs. Missing values are excluded from
+    every statistic, never treated as zero.
+    """
+    molecules, dataset_name = _molecules_for_dataset(db, dataset_id)
+    descriptors: list[DescriptorSummary] = []
+    for key, column in DESCRIPTOR_COLUMNS.items():
+        values = [
+            float(getattr(m, column.name))
+            for m in molecules
+            if getattr(m, column.name) is not None
+        ]
+        if values:
+            array = np.asarray(values, dtype=float)
+            descriptors.append(
+                DescriptorSummary(
+                    key=key,
+                    label=chemistry.DESCRIPTOR_LABELS[key],
+                    unit=chemistry.DESCRIPTOR_UNITS[key],
+                    record_count=len(molecules),
+                    included_count=len(values),
+                    min=float(array.min()),
+                    max=float(array.max()),
+                    mean=float(array.mean()),
+                    median=float(np.median(array)),
+                )
+            )
+        else:
+            descriptors.append(
+                DescriptorSummary(
+                    key=key,
+                    label=chemistry.DESCRIPTOR_LABELS[key],
+                    unit=chemistry.DESCRIPTOR_UNITS[key],
+                    record_count=len(molecules),
+                    included_count=0,
+                    min=None,
+                    max=None,
+                    mean=None,
+                    median=None,
+                )
+            )
+
+    return SummaryResponse(
+        dataset_name=dataset_name,
+        dataset_id=dataset_id,
+        record_count=len(molecules),
+        descriptors=descriptors,
     )
 
 

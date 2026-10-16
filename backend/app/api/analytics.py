@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.schemas.analysis import DistributionResponse, ScatterResponse
+from app.schemas.analysis import DistributionResponse, ScatterResponse, SummaryResponse
 from app.services import analytics_service
 
 router = APIRouter(tags=["Analytics"])
@@ -21,6 +21,15 @@ def distribution(
 ) -> DistributionResponse:
     """Histogram-ready distribution for one descriptor across a dataset."""
     return analytics_service.distribution(db, descriptor, dataset_id, bins)
+
+
+@router.get("/analytics/summary", response_model=SummaryResponse)
+def summary(
+    dataset_id: Optional[int] = Query(default=None),
+    db: Session = Depends(get_db),
+) -> SummaryResponse:
+    """Reference statistics for every descriptor across a dataset."""
+    return analytics_service.summary(db, dataset_id)
 
 
 @router.get("/analytics/scatter", response_model=ScatterResponse)
