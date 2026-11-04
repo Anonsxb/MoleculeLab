@@ -17,6 +17,7 @@ from app.api.imports import router as imports_router
 from app.api.compare import router as compare_router
 from app.api.analytics import router as analytics_router
 from app.api.export import router as export_router
+from app.api.studio import router as studio_router
 
 logger = logging.getLogger("moleculelab")
 
@@ -127,6 +128,7 @@ app.include_router(imports_router, prefix="/api")
 app.include_router(compare_router, prefix="/api")
 app.include_router(analytics_router, prefix="/api")
 app.include_router(export_router, prefix="/api")
+app.include_router(studio_router, prefix="/api")
 
 
 @app.get("/")

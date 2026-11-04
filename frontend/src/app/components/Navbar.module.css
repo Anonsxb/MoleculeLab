@@ -2,63 +2,197 @@
   position: absolute;
   left: -9999px;
   top: 0;
-  z-index: 100;
-  background: #0284c7;
+  z-index: 1000;
+  background: var(--brand-primary);
   color: #ffffff;
   padding: 0.6rem 1rem;
-  border-radius: 0 0 8px 0;
+  border-radius: 0 0 var(--radius-sm) 0;
   font-size: 0.85rem;
   font-weight: 600;
 }
 
 .skipLink:focus-visible {
   left: 0;
-  outline: 2px solid var(--cyan-accent);
+  outline: 2px solid var(--brand-accent);
   outline-offset: 2px;
 }
 
 .nav {
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 0.6rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background-color: var(--navbar-bg);
+  border-bottom: 1px solid var(--navbar-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.navContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.65rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  flex-shrink: 0;
+  padding: 0.15rem 0;
+}
+
+.brandEmblem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  background: rgba(220, 230, 222, 0.12);
+  color: #DCE6DE;
+  border: 1px solid rgba(220, 230, 222, 0.25);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.brandLink:hover .brandEmblem {
+  transform: scale(1.05);
+  background: rgba(220, 230, 222, 0.2);
+}
+
+.brandMeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandTitle {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--navbar-text);
+  line-height: 1.1;
+}
+
+.brandTag {
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #E2A788;
+}
+
+.navScroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.navScroll::-webkit-scrollbar {
+  display: none;
 }
 
 .list {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 0.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  white-space: nowrap;
 }
 
 .link {
-  display: inline-block;
-  padding: 0.45rem 0.85rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.84rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--navbar-text-muted);
   border: 1px solid transparent;
   transition: all 0.15s ease;
+  text-decoration: none;
 }
 
 .link:hover {
-  color: var(--text-main);
-  background: rgba(56, 189, 248, 0.08);
+  color: var(--navbar-text);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 .link:focus-visible {
-  outline: 2px solid var(--cyan-accent);
-  outline-offset: 2px;
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 1px;
 }
 
 .active {
-  color: #ffffff;
-  background: rgba(56, 189, 248, 0.12);
-  border-color: var(--border-subtle);
+  color: #FFFFFF;
+  background-color: var(--navbar-active-bg);
+  border-color: var(--navbar-active-border);
+  font-weight: 600;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.themeToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--navbar-text);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.themeToggle:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.themeToggle:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+.themeText {
+  white-space: nowrap;
+}
+
+@media (max-width: 960px) {
+  .navContainer {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .navScroll {
+    width: 100%;
+    order: 3;
+  }
+
+  .list {
+    padding-bottom: 0.25rem;
+  }
+
+  .navActions {
+    margin-left: auto;
+  }
 }

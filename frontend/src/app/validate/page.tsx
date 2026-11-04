@@ -140,10 +140,10 @@ export default function ValidatePage() {
               {result.valid ? (
                 <>
                   <p style={{ fontSize: "1rem", marginBottom: "1rem" }}>
-                    <strong style={{ color: "#34d399" }}>✓ Valid structure.</strong>{" "}
-                    <span style={{ color: "#cbd5e1" }}>
+                    <strong style={{ color: "var(--color-success)" }}>✓ Valid structure.</strong>{" "}
+                    <span style={{ color: "var(--text-main)" }}>
                       {result.formula ? `Formula ${result.formula}. ` : ""}
-                      Canonical form: <code>{result.canonical_smiles}</code>
+                      Canonical form: <code className={styles.code}>{result.canonical_smiles}</code>
                     </span>
                   </p>
                   <div style={{ maxWidth: "380px", marginBottom: "1.25rem" }}>

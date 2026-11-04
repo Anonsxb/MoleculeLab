@@ -1,24 +1,125 @@
 :root {
-  --bg-primary: #070d18;
-  --bg-secondary: #0c1626;
-  --bg-card: rgba(15, 27, 48, 0.7);
-  --bg-card-hover: rgba(22, 38, 66, 0.85);
-  --border-subtle: rgba(56, 189, 248, 0.15);
-  --border-accent: rgba(56, 189, 248, 0.4);
+  /* Modern Scientific Editorial - Light Mode */
+  --bg-primary: #F5F3EC;           /* Warm ivory */
+  --bg-secondary: #FBFAF6;         /* Soft mineral white */
+  --bg-card: #FFFFFF;              /* Pure mineral card surface */
+  --bg-card-subtle: #F7F5EE;       /* Subtle warm tone */
+  --bg-card-hover: #FBFBF9;
+  --bg-inset: #ECE8DD;             /* Inset control background */
   
-  --text-main: #f1f5f9;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
-  
-  --cyan-accent: #00d2ff;
-  --cyan-glow: rgba(0, 210, 255, 0.25);
-  --emerald-accent: #10b981;
-  --emerald-glow: rgba(16, 185, 129, 0.2);
-  --amber-accent: #f59e0b;
-  --indigo-accent: #6366f1;
+  /* Top Panel / Header Bar */
+  --navbar-bg: #183731;            /* Rich botanical forest panel */
+  --navbar-border: rgba(220, 230, 222, 0.16);
+  --navbar-text: #F1F6F3;
+  --navbar-text-muted: #A1B7B0;
+  --navbar-active-bg: rgba(220, 230, 222, 0.18);
+  --navbar-active-border: rgba(220, 230, 222, 0.32);
 
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --text-main: #192C2C;            /* Deep ink */
+  --text-muted: #5D6F6C;           /* Muted slate */
+  --text-dim: #849693;             /* Fine captions & secondary labels */
+  
+  --brand-primary: #28594F;        /* Botanical forest green */
+  --brand-primary-hover: #1E463E;
+  --brand-primary-active: #163730;
+  --brand-primary-subtle: #EBF2EF; /* Very light sage tint */
+  --brand-primary-border: #C8DBD3;
+
+  --brand-secondary: #DCE6DE;      /* Soft sage */
+  --brand-secondary-dark: #BCCEC0;
+
+  --brand-accent: #B87955;         /* Muted copper */
+  --brand-accent-hover: #9E6342;
+  --brand-accent-light: #FAF2ED;
+  --brand-accent-border: #E6CEBF;
+  
+  --border-subtle: #E4E2D9;        /* Warm grey */
+  --border-strong: #CDC9BC;        /* Defined dividers */
+
+  --color-success: #2C6B52;        /* Deep green */
+  --color-success-bg: #EDF7F2;
+  --color-success-border: #BCD8CB;
+
+  --color-warning: #B27B32;        /* Muted amber */
+  --color-warning-bg: #FCF7EE;
+  --color-warning-border: #E8D3B4;
+
+  --color-error: #B85348;          /* Muted brick red */
+  --color-error-bg: #FBF0EE;
+  --color-error-border: #E8BFBA;
+
+  /* Typography */
+  --font-sans: var(--font-body), "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-heading), "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: var(--font-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+
+  /* Shadows - subtle, architectural */
+  --shadow-xs: 0 1px 2px rgba(25, 44, 44, 0.04);
+  --shadow-sm: 0 1px 3px rgba(25, 44, 44, 0.06), 0 1px 2px rgba(25, 44, 44, 0.03);
+  --shadow-md: 0 4px 12px rgba(25, 44, 44, 0.06), 0 1px 3px rgba(25, 44, 44, 0.03);
+  --shadow-lg: 0 12px 28px rgba(25, 44, 44, 0.08), 0 2px 6px rgba(25, 44, 44, 0.04);
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+}
+
+[data-theme="dark"] {
+  /* Modern Scientific Editorial - Dark Mode */
+  --bg-primary: #0F1615;           /* Deep obsidian slate */
+  --bg-secondary: #141F1D;         /* Secondary mineral dark slate */
+  --bg-card: #182624;              /* Deep card surface */
+  --bg-card-subtle: #1C2C29;
+  --bg-card-hover: #213431;
+  --bg-inset: #121D1B;             /* Inset control background */
+
+  /* Top Panel / Header Bar */
+  --navbar-bg: #0B1211;            /* Deepest obsidian panel */
+  --navbar-border: rgba(220, 230, 222, 0.12);
+  --navbar-text: #EDF3EF;
+  --navbar-text-muted: #8E9F9B;
+  --navbar-active-bg: rgba(62, 126, 113, 0.28);
+  --navbar-active-border: rgba(74, 147, 132, 0.45);
+
+  --text-main: #E9EFEA;            /* Crisp light mineral ink */
+  --text-muted: #9BB0AB;           /* Muted sage slate */
+  --text-dim: #6B7F7A;             /* Secondary captions */
+
+  --brand-primary: #3E8274;        /* Vibrant botanical emerald */
+  --brand-primary-hover: #4B9889;
+  --brand-primary-active: #336C60;
+  --brand-primary-subtle: rgba(62, 130, 116, 0.22);
+  --brand-primary-border: rgba(75, 152, 137, 0.38);
+
+  --brand-secondary: #253C37;      /* Dark sage */
+  --brand-secondary-dark: #324F49;
+
+  --brand-accent: #CF8E69;         /* Warm luminescent copper */
+  --brand-accent-hover: #DE9E7A;
+  --brand-accent-light: rgba(184, 121, 85, 0.18);
+  --brand-accent-border: rgba(207, 142, 105, 0.36);
+
+  --border-subtle: #243734;        /* Dark refined slate border */
+  --border-strong: #334D48;
+
+  --color-success: #43A37A;        /* Vibrant deep green */
+  --color-success-bg: rgba(44, 107, 82, 0.22);
+  --color-success-border: rgba(67, 163, 122, 0.38);
+
+  --color-warning: #D9A04B;        /* Muted amber */
+  --color-warning-bg: rgba(178, 123, 50, 0.22);
+  --color-warning-border: rgba(217, 160, 75, 0.38);
+
+  --color-error: #D66D63;          /* Muted brick red */
+  --color-error-bg: rgba(184, 83, 72, 0.22);
+  --color-error-border: rgba(214, 109, 99, 0.38);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.38);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -33,12 +134,31 @@ html, body {
   background-color: var(--bg-primary);
   color: var(--text-main);
   font-family: var(--font-sans);
-  background-image: 
-    radial-gradient(circle at 15% 15%, rgba(0, 210, 255, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
-    linear-gradient(to bottom, #070d18 0%, #050912 100%);
-  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Subtle editorial paper texture hint */
+body {
+  background-image: 
+    radial-gradient(circle at 100% 0%, rgba(40, 89, 79, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(184, 121, 85, 0.05) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+[data-theme="dark"] body {
+  background-image: 
+    radial-gradient(circle at 100% 0%, rgba(62, 130, 116, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(207, 142, 105, 0.06) 0%, transparent 50%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-main);
+  letter-spacing: -0.015em;
+  font-weight: 700;
 }
 
 a {
@@ -51,18 +171,30 @@ button {
   cursor: pointer;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+code, kbd, samp, pre {
+  font-family: var(--font-mono);
 }
+
+/* Restrained Scientific Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: var(--border-strong);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: var(--text-dim);
+}
+
+::selection {
+  background: var(--brand-secondary);
+  color: var(--brand-primary);
 }

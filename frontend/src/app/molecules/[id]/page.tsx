@@ -221,8 +221,8 @@ function MoleculeDetailWorkspace() {
               <h2 className={styles.sectionTitle}>What these descriptors mean</h2>
               <div className={styles.card}>
                 {DESCRIPTOR_ORDER.map((key) => (
-                  <p key={key} style={{ marginBottom: "0.75rem", fontSize: "0.86rem", lineHeight: 1.6, color: "#cbd5e1" }}>
-                    <strong style={{ color: "#ffffff" }}>{key.replace("_", " ")}:</strong>{" "}
+                  <p key={key} style={{ marginBottom: "0.85rem", fontSize: "0.86rem", lineHeight: 1.6, color: "var(--text-muted)" }}>
+                    <strong style={{ color: "var(--text-main)" }}>{key.replace("_", " ")}:</strong>{" "}
                     {EXPLANATIONS[key]}
                   </p>
                 ))}

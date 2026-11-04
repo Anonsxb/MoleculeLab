@@ -115,8 +115,8 @@ export default function DocsPage() {
         <section className={styles.section} aria-label="For developers">
           <h2 className={styles.sectionTitle}>For developers</h2>
           <div className={styles.card}>
-            <p style={{ fontSize: "0.88rem", color: "#cbd5e1", marginBottom: "1rem" }}>
-              Want to call MoleculeLab from your own code? Endpoints, parameters, examples, and
+            <p style={{ fontSize: "0.88rem", color: "var(--text-muted)", marginBottom: "1rem" }}>
+              Want to call DrugMatch from your own code? Endpoints, parameters, examples, and
               error codes live on the developer page.
             </p>
             <div className={styles.buttonRow}>

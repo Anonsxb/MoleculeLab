@@ -7,7 +7,7 @@ export default function NotFound() {
       <main id="main-content" style={{ paddingTop: "4rem", textAlign: "center" }}>
         <p
           aria-hidden="true"
-          style={{ fontSize: "4rem", fontWeight: 800, color: "var(--cyan-accent)", margin: 0 }}
+          style={{ fontSize: "4.5rem", fontWeight: 800, color: "var(--brand-accent)", margin: 0, fontFamily: "var(--font-mono)" }}
         >
           404
         </p>

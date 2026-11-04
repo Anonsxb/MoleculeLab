@@ -163,7 +163,7 @@ const result = await res.json();
         <section className={styles.section} aria-label="Errors">
           <h2 className={styles.sectionTitle}>Errors</h2>
           <div className={styles.card}>
-            <p style={{ fontSize: "0.86rem", color: "#cbd5e1", marginBottom: "0.75rem" }}>
+            <p style={{ fontSize: "0.86rem", color: "var(--text-muted)", marginBottom: "0.75rem" }}>
               Every failure uses one envelope — no stack traces or internals leak:
             </p>
             <pre className={styles.codeBlock}>

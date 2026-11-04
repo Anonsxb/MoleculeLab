@@ -199,7 +199,7 @@ export default function ImportPage() {
           <section className={styles.section} aria-label="Import result">
             <h2 className={styles.sectionTitle}>Import complete</h2>
             <div className={styles.card}>
-              <p style={{ fontSize: "0.9rem", color: "#cbd5e1", marginBottom: "1rem" }}>
+              <p style={{ fontSize: "0.9rem", color: "var(--text-main)", marginBottom: "1rem" }}>
                 Dataset “{imported.dataset_name}” (id {imported.dataset_id}) was created with{" "}
                 {imported.created} new record(s)
                 {imported.linked > 0 ? (

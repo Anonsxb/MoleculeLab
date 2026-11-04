@@ -153,37 +153,39 @@ export default function AnalyticsPage() {
                   <>
                     <ResponsiveContainer width="100%" height={360}>
                       <ScatterChart margin={{ top: 20, right: 24, bottom: 40, left: 16 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.18)" />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E4E2D9" />
                         <XAxis
                           type="number"
                           dataKey="x"
                           name={scatter.x_label}
-                          tick={{ fill: "#94a3b8", fontSize: 11 }}
-                          stroke="#475569"
+                          tick={{ fill: "#697775", fontSize: 11 }}
+                          stroke="#CDC9BC"
                           label={{
                             value: `${scatter.x_label} (${scatter.x_unit})`,
                             position: "insideBottom",
                             offset: -24,
-                            fill: "#cbd5e1",
+                            fill: "#192C2C",
                             fontSize: 12,
+                            fontWeight: 600,
                           }}
                         />
                         <YAxis
                           type="number"
                           dataKey="y"
                           name={scatter.y_label}
-                          tick={{ fill: "#94a3b8", fontSize: 11 }}
-                          stroke="#475569"
+                          tick={{ fill: "#697775", fontSize: 11 }}
+                          stroke="#CDC9BC"
                           label={{
                             value: `${scatter.y_label} (${scatter.y_unit})`,
                             angle: -90,
                             position: "insideLeft",
-                            fill: "#cbd5e1",
+                            fill: "#192C2C",
                             fontSize: 12,
+                            fontWeight: 600,
                           }}
                         />
                         <Tooltip content={<ScatterTooltip xUnit={scatter.x_unit} yUnit={scatter.y_unit} xLabel={scatter.x_label} yLabel={scatter.y_label} />} />
-                        <Scatter data={scatter.points} fill="#22d3ee" fillOpacity={0.75} />
+                        <Scatter data={scatter.points} fill="#28594F" stroke="#1E463E" fillOpacity={0.75} />
                       </ScatterChart>
                     </ResponsiveContainer>
                     <p className={styles.summary}>
@@ -261,31 +263,32 @@ function DistributionCard({
       </p>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={bins} margin={{ top: 16, right: 16, bottom: 36, left: 8 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.18)" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E4E2D9" />
           <XAxis
             dataKey="label"
-            tick={{ fill: "#94a3b8", fontSize: 10 }}
+            tick={{ fill: "#697775", fontSize: 10 }}
             angle={-35}
             textAnchor="end"
             height={60}
-            stroke="#475569"
+            stroke="#CDC9BC"
           />
           <YAxis
             allowDecimals={false}
-            tick={{ fill: "#94a3b8", fontSize: 11 }}
-            stroke="#475569"
+            tick={{ fill: "#697775", fontSize: 11 }}
+            stroke="#CDC9BC"
             label={{
               value: "molecules",
               angle: -90,
               position: "insideLeft",
-              fill: "#cbd5e1",
+              fill: "#192C2C",
               fontSize: 12,
+              fontWeight: 600,
             }}
           />
           <Tooltip content={<BarTooltip unit={data.unit} />} />
           <Bar dataKey="count" radius={[3, 3, 0, 0]}>
             {bins.map((bin) => (
-              <Cell key={bin.index} fill="#0ea5e9" />
+              <Cell key={bin.index} fill="#28594F" />
             ))}
           </Bar>
         </BarChart>

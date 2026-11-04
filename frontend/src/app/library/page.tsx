@@ -172,11 +172,11 @@ function LibraryWorkspace() {
     <div className={styles.container}>
       <BackLink />
       <main id="main-content">
-        <h1 className={styles.title}>Molecular Library</h1>
+        <h1 className={styles.title}>Molecular Library & Screening</h1>
         <p className={styles.subtitle}>
-          Server-side search, descriptor filters, sorting, and pagination across{" "}
-          {datasets.length > 0 ? `${datasets.map((d) => d.record_count).reduce((a, b) => a + b, 0)} records` : "the dataset"}.
-          Select up to four molecules, then open the comparison page.
+          Screen candidate molecules across calculated physicochemical descriptors, filter by multi-parameter
+          ranges, rank records by any descriptor, and select up to four molecules for comparative profiling.
+          Covering {datasets.length > 0 ? `${datasets.map((d) => d.record_count).reduce((a, b) => a + b, 0)} records` : "the dataset"}.
         </p>
 
         <section className={styles.section} aria-label="Search the library">
