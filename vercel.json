@@ -1,27 +1,4 @@
-{
-  "version": 3,
-  "services": [
-    {
-      "src": "frontend",
-      "use": "@vercel/next"
-    },
-    {
-      "src": "backend/app",
-      "use": "@vercel/python",
-      "config": {
-        "runtime": "python3.12",
-        "functions": {
-          "main.py": {
-            "maxDuration": 300,
-            "memory": 2048
-          }
-        }
-      },
-      "entrypoint": "main.py"
-    }
-  ],
-  "rewrites": [
-    { "src": "/api/(.*)", "dest": "/backend/app/main.py/api/$1" }
-  ]
-}
 
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json"
+}
