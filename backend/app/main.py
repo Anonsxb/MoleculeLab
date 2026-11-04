@@ -45,15 +45,26 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS Middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.cors_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+# Private LAN origins (RFC 1918) on the Next.js port, for phone/laptop testing.
+_DEV_LAN_ORIGIN = (
+    r"https?://("
+    r"localhost|127\.0\.0\.1|"
+    r"192\.168\.\d{1,3}\.\d{1,3}|"
+    r"10\.\d{1,3}\.\d{1,3}\.\d{1,3}|"
+    r"172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}"
+    r"):3000"
 )
 
+_cors_kwargs: dict = {
+    "allow_origins": settings.cors_origins,
+    "allow_credentials": True,
+    "allow_methods": ["*"],
+    "allow_headers": ["*"],
+}
+if settings.DEBUG or settings.ENVIRONMENT == "development":
+    _cors_kwargs["allow_origin_regex"] = _DEV_LAN_ORIGIN
+
+app.add_middleware(CORSMiddleware, **_cors_kwargs)
 
 # Standardized error response structure per PRD FR-13
 @app.exception_handler(RequestValidationError)

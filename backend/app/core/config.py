@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     BACKEND_HOST: str = "127.0.0.1"
     BACKEND_PORT: int = 8000
 
-    ALLOWED_ORIGINS: str = "http://localhost:3000,http://127.0.0.1:3000"
+    ALLOWED_ORIGINS: str = "http://localhost:3000,http://127.0.0.1:3000,http://172.16.0.153:3000"
 
     DATABASE_URL: str = f"sqlite:///{BACKEND_ROOT / 'moleculelab.db'}"
 

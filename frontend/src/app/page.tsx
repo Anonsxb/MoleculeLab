@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { getApiUrl } from "../lib/api";
 import styles from "./page.module.css";
 
 interface HealthData {
@@ -18,7 +19,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [pingLatency, setPingLatency] = useState<number | null>(null);
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const apiUrl = getApiUrl();
 
   const fetchHealth = useCallback(async () => {
     setLoading(true);

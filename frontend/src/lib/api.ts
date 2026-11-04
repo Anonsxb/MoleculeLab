@@ -1,6 +1,17 @@
 /** Shared API client for the MoleculeLab backend. */
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+export function getApiUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "");
+  if (explicit) return explicit;
+  // When the UI is opened via a LAN IP, localhost would point at the phone/laptop
+  // instead of this machine. Resolve the API host from the page origin at call time.
+  if (typeof window !== "undefined") {
+    return `${window.location.protocol}//${window.location.hostname}:8000`;
+  }
+  return "http://127.0.0.1:8000";
+}
+
+export const API_URL = getApiUrl();
 
 export interface Descriptors {
   molecular_weight: number | null;
@@ -243,7 +254,7 @@ export function describeError(error: unknown, fallback: string): string {
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
   try {
-    response = await fetch(`${API_URL}/api${path}`, {
+    response = await fetch(`${getApiUrl()}/api${path}`, {
       ...init,
       headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
       cache: "no-store",
@@ -328,7 +339,7 @@ export const api = {
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined && value !== "") search.set(key, String(value));
     }
-    return `${API_URL}/api/export.csv?${search.toString()}`;
+    return `${getApiUrl()}/api/export.csv?${search.toString()}`;
   },
   exportMeta: () => request<{
     dataset_name: string;
@@ -348,7 +359,7 @@ export const api = {
     let response: Response;
     try {
       response = await fetch(
-        `${API_URL}/api/datasets/import/preview?dataset_name=${encodeURIComponent(datasetName)}&description=${encodeURIComponent(description)}`,
+        `${getApiUrl()}/api/datasets/import/preview?dataset_name=${encodeURIComponent(datasetName)}&description=${encodeURIComponent(description)}`,
         { method: "POST", body: form },
       );
     } catch {
