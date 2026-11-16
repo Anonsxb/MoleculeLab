@@ -33,6 +33,10 @@
   color: #6E221B;
 }
 
+:global([data-theme="dark"]) .error {
+  color: var(--color-error);
+}
+
 .error strong {
   color: var(--color-error);
 }

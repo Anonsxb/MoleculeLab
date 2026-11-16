@@ -53,6 +53,12 @@ interface ViewerProps {
   autoRotate: boolean;
   onSelectAtom: (atom: StudioAtom | null) => void;
   onMeasurementChange: (measurement: { type: string; atoms: number[]; value: string } | null) => void;
+  // Editor integration props
+  editorMode?: "select" | "add_atom" | "draw_bond" | "delete" | "measure";
+  elementToAdd?: string;
+  bondOrderToAdd?: number;
+  selectedEditorAtom?: number;
+  onEditorAction?: (action: any) => void;
 }
 
 // Convert Gasteiger charge [-0.5, +0.5] to RGB color (red = neg, white = 0, blue = pos)
@@ -77,6 +83,11 @@ export default function StudioViewer({
   autoRotate,
   onSelectAtom,
   onMeasurementChange,
+  editorMode = "select",
+  elementToAdd,
+  bondOrderToAdd,
+  selectedEditorAtom,
+  onEditorAction,
 }: ViewerProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -92,6 +103,19 @@ export default function StudioViewer({
   const isDraggingRef = useRef(false);
   const isPanningRef = useRef(false);
   const prevMouseRef = useRef({ x: 0, y: 0 });
+
+  // Store editor props in refs so the click handler always sees current values
+  const editorModeRef = useRef(editorMode);
+  const elementToAddRef = useRef(elementToAdd);
+  const bondOrderToAddRef = useRef(bondOrderToAdd);
+  const selectedEditorAtomRef = useRef(selectedEditorAtom);
+  const onEditorActionRef = useRef(onEditorAction);
+
+  useEffect(() => { editorModeRef.current = editorMode; }, [editorMode]);
+  useEffect(() => { elementToAddRef.current = elementToAdd; }, [elementToAdd]);
+  useEffect(() => { bondOrderToAddRef.current = bondOrderToAdd; }, [bondOrderToAdd]);
+  useEffect(() => { selectedEditorAtomRef.current = selectedEditorAtom; }, [selectedEditorAtom]);
+  useEffect(() => { onEditorActionRef.current = onEditorAction; }, [onEditorAction]);
 
   // Calculate geometry measurements
   const updateMeasurements = useCallback((indices: number[]) => {
@@ -289,6 +313,63 @@ export default function StudioViewer({
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObjects(Array.from(atomMeshesRef.current.values()));
 
+      const currentEditorMode = editorModeRef.current;
+      const currentOnEditorAction = onEditorActionRef.current;
+
+      // Editor mode handling
+      if (currentEditorMode === "add_atom" && currentOnEditorAction) {
+        const dir = raycaster.ray.direction.clone().normalize();
+        const pos = camera.position.clone().add(dir.multiplyScalar(18));
+        const symbol = elementToAddRef.current || "C";
+        const atomicNumberMap: Record<string, number> = { H: 1, C: 6, N: 7, O: 8, F: 9, P: 15, S: 16, Cl: 17, Br: 35, I: 53 };
+        const atomicNum = atomicNumberMap[symbol] ?? 6;
+        currentOnEditorAction({
+          type: "ADD_ATOM",
+          payload: {
+            index: Date.now(),
+            symbol,
+            atomic_number: atomicNum,
+            x: pos.x,
+            y: pos.y,
+            z: pos.z,
+            is_hydrogen: symbol === "H",
+          },
+        });
+        return;
+      }
+
+      if (currentEditorMode === "delete" && currentOnEditorAction) {
+        if (intersects.length > 0) {
+          const hit = intersects[0].object as THREE.Mesh;
+          const atomIdx = hit.userData.atomIndex as number;
+          currentOnEditorAction({ type: "DELETE_ATOM", payload: atomIdx });
+        }
+        return;
+      }
+
+      if (currentEditorMode === "draw_bond" && currentOnEditorAction) {
+        if (intersects.length > 0) {
+          const hit = intersects[0].object as THREE.Mesh;
+          const atomIdx = hit.userData.atomIndex as number;
+          const selAtom = selectedEditorAtomRef.current;
+          if (selAtom != null && selAtom !== atomIdx) {
+            currentOnEditorAction({
+              type: "ADD_BOND",
+              payload: {
+                atom1: selAtom,
+                atom2: atomIdx,
+                order: bondOrderToAddRef.current ?? 1,
+                is_aromatic: false,
+              },
+            });
+          } else {
+            currentOnEditorAction({ type: "SET_SELECTED_ATOM", payload: atomIdx });
+          }
+        }
+        return;
+      }
+
+      // Default selection behavior (select mode or measurement)
       if (intersects.length > 0) {
         const hit = intersects[0].object as THREE.Mesh;
         const atomIdx = hit.userData.atomIndex as number;

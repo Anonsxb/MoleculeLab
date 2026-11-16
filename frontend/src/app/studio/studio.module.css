@@ -66,7 +66,7 @@
 .toolGroup {
   display: flex;
   align-items: center;
-  background: #FFFFFF;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 2px;
@@ -99,7 +99,7 @@
 }
 
 .exportBtn {
-  background: #FFFFFF;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   color: var(--brand-accent);
   padding: 5px 11px;
@@ -149,7 +149,7 @@
 }
 
 .panelCard {
-  background: #FFFFFF;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 14px;
@@ -171,7 +171,7 @@
 
 .inputField {
   width: 100%;
-  background: #FFFFFF;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 8px 10px;

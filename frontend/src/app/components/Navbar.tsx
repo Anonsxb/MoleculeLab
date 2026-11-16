@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { href: '/library', label: 'Library & Screening' },
   { href: '/compare', label: 'Compare' },
   { href: '/analytics', label: 'Analytics' },
+  { href: '/modelling', label: '3D Modelling' },
   { href: '/studio', label: '3D Studio' },
   { href: '/validate', label: 'Check SMILES' },
   { href: '/import', label: 'Import' },

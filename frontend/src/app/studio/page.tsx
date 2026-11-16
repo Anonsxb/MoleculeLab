@@ -2,8 +2,12 @@
 
 import { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import styles from "./studio.module.css";
 import type { StudioData, StudioAtom } from "./StudioViewer";
+import { useEditor } from "./editorContext";
+import { EditorToolbar } from "./EditorToolbar";
+import { EditorProvider } from "./EditorProvider";
 
 // Dynamic import with ssr: false for Three.js WebGL component
 const StudioViewer = dynamic(() => import("./StudioViewer"), {
@@ -26,7 +30,10 @@ const DEFAULT_PRESETS = [
   { id: "dopamine", name: "Dopamine", smiles: "NCCc1ccc(O)c(O)c1", category: "Neurotransmitters" },
 ];
 
-export default function StudioPage() {
+// Inner component that uses the editor context (must be rendered inside EditorProvider)
+function StudioPageInner() {
+  const { state: editorState, dispatch: editorDispatch } = useEditor();
+
   const [smilesInput, setSmilesInput] = useState("CN1C=NC2=C1C(=O)N(C(=O)N2C)C");
   const [forceField, setForceField] = useState("MMFF94");
   const [optimize, setOptimize] = useState(true);
@@ -45,6 +52,11 @@ export default function StudioPage() {
   const [selectedAtom, setSelectedAtom] = useState<StudioAtom | null>(null);
   const [activeMeasurement, setActiveMeasurement] = useState<{ type: string; atoms: number[]; value: string } | null>(null);
 
+  const handleEditorAction = useCallback((action: any) => {
+    editorDispatch(action);
+  }, [editorDispatch]);
+
+  // Build molecule from SMILES
   const buildMolecule = useCallback(async (smiles: string) => {
     setLoading(true);
     setErrorMsg(null);
@@ -53,8 +65,8 @@ export default function StudioPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          smiles: smiles,
-          optimize: optimize,
+          smiles,
+          optimize,
           max_iterations: 500,
           force_field: forceField,
         }),
@@ -69,19 +81,30 @@ export default function StudioPage() {
       setStudioData(data);
       setSelectedAtom(null);
       setActiveMeasurement(null);
+      // Initialise editor graph from fetched data
+      editorDispatch({
+        type: "RESET",
+        payload: {
+          atoms: data.atoms,
+          bonds: data.bonds,
+          mode: "select",
+          history: [],
+          future: [],
+        },
+      });
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Error generating 3D structure";
       setErrorMsg(message);
     } finally {
       setLoading(false);
     }
-  }, [forceField, optimize]);
+  }, [forceField, optimize, editorDispatch]);
 
   // Initial load
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     buildMolecule(smilesInput);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSelectPreset = (preset: typeof DEFAULT_PRESETS[0]) => {
     setActivePreset(preset.id);
@@ -123,6 +146,7 @@ export default function StudioPage() {
 
   return (
     <div className={styles.container}>
+      <EditorToolbar />
       {/* Top Header / Toolbar */}
       <header className={styles.headerBar}>
         <div className={styles.titleArea}>
@@ -144,7 +168,7 @@ export default function StudioPage() {
               onClick={() => setViewMode('ball_stick')}
               title="Ball and Stick representation"
             >
-              🧪 Ball & Stick
+              🧪 Ball &amp; Stick
             </button>
             <button
               className={`${styles.toolBtn} ${viewMode === 'spacefill' ? styles.toolBtnActive : ''}`}
@@ -211,6 +235,15 @@ export default function StudioPage() {
               Export MOL
             </button>
           </div>
+
+          <Link
+            href="/modelling"
+            className={styles.submitBtn}
+            style={{ width: 'auto', textDecoration: 'none', padding: '5px 12px', fontSize: '0.8rem' }}
+            title="Open full interactive 3D Molecular Modelling Workstation"
+          >
+            ⚛️ 3D Modelling Workstation
+          </Link>
         </div>
       </header>
 
@@ -219,9 +252,7 @@ export default function StudioPage() {
         {/* Left Sidebar: Molecule Inputs & Presets */}
         <aside className={styles.sidebar}>
           <div className={styles.panelCard}>
-            <h2 className={styles.panelTitle}>
-              Structure Input
-            </h2>
+            <h2 className={styles.panelTitle}>Structure Input</h2>
             <form onSubmit={handleSubmit}>
               <label htmlFor="smiles-input" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>
                 SMILES String
@@ -282,9 +313,7 @@ export default function StudioPage() {
 
           {/* Quick Presets */}
           <div className={styles.panelCard} style={{ flex: 1 }}>
-            <h2 className={styles.panelTitle}>
-              Preset Structures
-            </h2>
+            <h2 className={styles.panelTitle}>Preset Structures</h2>
             <div className={styles.presetList}>
               {DEFAULT_PRESETS.map((p) => (
                 <button
@@ -304,13 +333,22 @@ export default function StudioPage() {
         <section className={styles.viewportContainer}>
           {studioData && (
             <StudioViewer
-              data={studioData}
+              data={{
+                ...studioData,
+                atoms: editorState.atoms.length > 0 ? editorState.atoms as any : studioData.atoms,
+                bonds: editorState.bonds.length > 0 ? editorState.bonds as any : studioData.bonds,
+              }}
               mode={viewMode}
               showHydrogens={showHydrogens}
               showLabels={false}
               autoRotate={autoRotate}
               onSelectAtom={setSelectedAtom}
               onMeasurementChange={setActiveMeasurement}
+              editorMode={editorState.mode}
+              elementToAdd={editorState.elementToAdd}
+              bondOrderToAdd={editorState.bondOrderToAdd}
+              selectedEditorAtom={editorState.selectedAtom}
+              onEditorAction={handleEditorAction}
             />
           )}
         </section>
@@ -421,5 +459,14 @@ export default function StudioPage() {
         </aside>
       </main>
     </div>
+  );
+}
+
+// Outer wrapper that provides the editor context
+export default function StudioPage() {
+  return (
+    <EditorProvider>
+      <StudioPageInner />
+    </EditorProvider>
   );
 }
